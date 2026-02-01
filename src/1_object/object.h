@@ -13,8 +13,8 @@ typedef enum e_object_type
 typedef struct s_object
 {
 	t_object_type	type;
-	size_t			row;
-	size_t			col;
+	size_t			y;
+	size_t			x;
 }	t_object;
 
 #endif
