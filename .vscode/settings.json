@@ -1,0 +1,10 @@
+{
+	"clangd.fallbackFlags": [
+		"-x", "c",
+		"-I${workspaceFolder}",
+		"-I${workspaceFolder}/libft",
+		"-I${workspaceFolder}/logs",
+		"-I${workspaceFolder}/src/1_object",
+		"-I${workspaceFolder}/src/2_map"
+	]
+}
