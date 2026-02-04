@@ -1,17 +1,21 @@
+# TODO
+
+- Handle correctly window closing with red cross (event 17 askip)
+- Handle all possible window sizes (camera !)
+- Ajouter un sprite pour la sortie closed (les COLLECTIBLES n'ont pas tous étés récupérés) vs la sortie open
+- Gérer la récupération des collectibles
+- Print le nombre de moves dans le terminal
+- Gérer la fin de partie
+
 # QUESTIONS
 
 - Empty line at EOF is OK ??
-- What was the douille (Alexander)
-- Tous les collectibles doivent être accessibles pour considérer la map comme valide ?
 - Only accept `.ber` files ?!
 - Player fails if he doesn't take the "shortest possible route" ?!
 
 # TESTS
 
-- Add invalid char inside walls (basic)
-- Add collectible inside walls (flood_fill)
-- Add Exit inside walls (flood_fill)
-- Add player inside walls (flood_fill)
+- Add missing wall at top / bot / left /right
 
 # SUBMIT
 

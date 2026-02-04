@@ -1,31 +1,22 @@
 #include "libft.h"
-#include "map.h"
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
+#include "so_long.h"
 #include <stdlib.h>
-
-# include "logs.h"
 
 int	main(int argc, char **argv)
 {
 	t_map		map;
 	t_object	player;
+	t_game		game;
 
-	// print_start(99, "main()");
 	if (argc != 2)
 	{
-		ft_dprintf(STDERR_FILENO, "Error\n");
-		ft_dprintf(STDERR_FILENO, "⇢ Usage: %s <map.ber>\n", argv[0]);
+		fprint_err(false, "Usage", "%s <map.ber>", argv[0]);
 		return (EXIT_FAILURE);
 	}
-	if (!map_parse(&map, argv[1], &player))
-	{
-		ft_dprintf(STDERR_FILENO, "Error\n⇢ Internal error: ");
-		strerror(errno);
+	if (!map_load(&map, argv[1], &player))
 		return (EXIT_FAILURE);
-	}
-	str_array_free(&map.grid);
-	print_result("Done!");
+	if (!game_launch(&game, &map, &player))
+		return (EXIT_FAILURE);
+	map_free(&map);
 	return (EXIT_SUCCESS);
 }

@@ -1,3 +1,8 @@
+A tester:
+`magick <source_img> -resize 64x64! -gravity center <output_img>`
+Fonctionne:
+`magick <source_img> -resize 64x64! -gravity center -colors 32 -type Palette <output_img>`
+
 # INIT
 
 - mlx_init()

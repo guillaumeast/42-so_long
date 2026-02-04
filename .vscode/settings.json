@@ -4,7 +4,12 @@
 		"-I${workspaceFolder}",
 		"-I${workspaceFolder}/libft",
 		"-I${workspaceFolder}/logs",
-		"-I${workspaceFolder}/src/1_object",
-		"-I${workspaceFolder}/src/2_map"
+		"-I${workspaceFolder}/mlx",
+		"-I${workspaceFolder}/src",
+		"-I${workspaceFolder}/1_map",
+		"-I${workspaceFolder}/2_sprites",
+		"-I${workspaceFolder}/3_render",
+		"-I${workspaceFolder}/4_hooks",
+		"-I${workspaceFolder}/5_game"
 	]
 }

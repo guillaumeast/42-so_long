@@ -1,22 +1,15 @@
 #include "libft.h"
-#include "map.h"
+#include "map_priv.h"
 #include <stdlib.h>
 #include <unistd.h>
 
 # include "logs.h"
 
-typedef struct s_flood
-{
-	bool	**visited;
-	size_t	collectibles;
-	bool	exit;
-}	t_flood;
-
 static bool	flood_init(t_flood *flood, t_map *map);
 static bool	flood_exec(t_flood *flood, t_map *map, size_t y, size_t x);
 static void	flood_free(t_flood *flood);
 
-bool	valid_path_exists(t_map *map, t_object *player)
+bool	map_has_valid_path(t_map *map, t_object *player)
 {
 	t_flood	flood;
 
@@ -29,13 +22,12 @@ bool	valid_path_exists(t_map *map, t_object *player)
 	if (!flood_exec(&flood, map, player->y, player->x))
 	{
 		print_result("flood_exec() done!");
-		ft_dprintf(STDERR_FILENO, "Error\n");
 		if (flood.collectibles != map->collectibles)
-			ft_dprintf(STDERR_FILENO, "⇢ All collectibles must be reachable\n");
+			print_err(false, "All collectibles must be reachable\n");
 		if (!flood.exit)
-			ft_dprintf(STDERR_FILENO, "⇢ Exit must be reachable.\n");
+			print_err(false, "Exit must be reachable.\n");
 		flood_free(&flood);
-		exit(EXIT_FAILURE);
+		return (false);
 	}
 	print_result("flood_exec() done!");
 	flood_free(&flood);
@@ -43,19 +35,30 @@ bool	valid_path_exists(t_map *map, t_object *player)
 	return (true);
 }
 
+/*
+*	Checks if all collectibles and exit are reachable.
+*
+*	Does print error message.
+*	Does NOT free flood on failure.
+*	Does NOT free map on failure.
+*
+*	WARNING: map must have been loaded with map_load().
+*/
 static bool	flood_init(t_flood *flood, t_map *map)
 {
 	size_t	y;
 
 	flood->visited = malloc((map->height + 1) * sizeof * flood->visited);
 	if (!flood->visited)
-		return (false);
+		return (fprint_err(true, "Failed alloc",
+		" of %zu bytes", (map->height + 1) * sizeof * flood->visited), false);
 	y = 0;
 	while (y < map->height)
 	{
 		flood->visited[y] = malloc(map->width * sizeof ** flood->visited);
 		if (!flood->visited[y])
-			return (flood_free(flood), false);
+			return (fprint_err(true, "Failed alloc", "of %zu bytes at index %zu"
+			, map->width * sizeof ** flood->visited, y), false);
 		ft_memset(flood->visited[y], false, map->width);
 		y++;
 	}
@@ -65,6 +68,16 @@ static bool	flood_init(t_flood *flood, t_map *map)
 	return (true);
 }
 
+/*
+*	Checks recursively each reachable cell of the map.
+*
+*	Does NOT print error message.
+*	Does NOT free flood on failure.
+*	Does NOT free map on failure.
+*
+*	WARNING: flood must have been initialized with flood_init().
+*	WARNING: map must have been loaded with map_load().
+*/
 static bool	flood_exec(t_flood *flood, t_map *map, size_t y, size_t x)
 {
 	char	cell;
@@ -108,10 +121,17 @@ static bool	flood_exec(t_flood *flood, t_map *map, size_t y, size_t x)
 	return (false);
 }
 
+/*
+*	Frees each pointer inside the array and the array itself.
+*
+*	WARNING: does NOT set the given pointer to NULL.
+*/
 static void	flood_free(t_flood *flood)
 {
 	size_t	y;
 
+	if (!flood)
+		return ;
 	y = 0;
 	while (flood->visited[y])
 		free(flood->visited[y++]);
