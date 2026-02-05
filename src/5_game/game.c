@@ -92,4 +92,5 @@ void	game_free(t_game *game)
 			mlx_destroy_window(game->context, game->window);
 		mlx_destroy_display(game->context);
 	}
+	free(game->context);
 }
