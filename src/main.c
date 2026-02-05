@@ -16,9 +16,9 @@ int	main(int argc, char **argv)
 	print_start(99, NULL);
 	game_init(&game);
 	if (!map_load(&game, argv[1]))
-		return (EXIT_FAILURE);
+		return (game_free(&game), EXIT_FAILURE);
 	if (!game_launch(&game))
-		return (EXIT_FAILURE);
+		return (game_free(&game), EXIT_FAILURE);
 	game_free(&game);
 	print_stop();
 	return (EXIT_SUCCESS);
