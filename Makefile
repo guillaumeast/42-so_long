@@ -1,6 +1,12 @@
 NAME			:= so_long
 CC				:= cc
-CFLAGS			:= -Wall -Wextra -Werror -O2 -g3 -fsanitize=address
+CFLAGS			:= -Wall -Wextra -Werror -O2 -g3
+
+SANITIZE ?= 1
+
+ifeq ($(SANITIZE),1)
+	CFLAGS += -fsanitize=address
+endif
 
 # ================= OS SWITCH ================= #
 
