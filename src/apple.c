@@ -1,23 +1,13 @@
 #include <CoreGraphics/CoreGraphics.h>
-#include <stdio.h>
 
 int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey)
 {
-	(void)mlx_ptr;
-	CGDirectDisplayID	display;
-	CGDisplayModeRef	mode;
+	CGDirectDisplayID	window_id;
 
-	display = CGMainDisplayID();
-	mode = CGDisplayCopyDisplayMode(display);
-	if (!mode)
-	{
-		*sizex = 0;
-		*sizey = 0;
-		return (0);
-	}
-	*sizex = (int)CGDisplayModeGetPixelWidth(mode);
-	*sizey = (int)CGDisplayModeGetPixelHeight(mode);
-	CGDisplayModeRelease(mode);
+	(void)mlx_ptr;
+	window_id = CGMainDisplayID();
+	*sizex = (int)CGDisplayPixelsWide(window_id);
+	*sizey = (int)CGDisplayPixelsHigh(window_id);
 	return (1);
 }
 

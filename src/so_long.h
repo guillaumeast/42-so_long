@@ -75,10 +75,10 @@ typedef struct s_window
 {
 	size_t	height;
 	size_t	width;
-	size_t	top_left_y;
-	size_t	top_left_x;
-	size_t	bot_right_y;
-	size_t	bot_right_x;
+	size_t	y_start;
+	size_t	x_start;
+	size_t	y_end;
+	size_t	x_end;
 }	t_window;
 
 typedef struct s_game

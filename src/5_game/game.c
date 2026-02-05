@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 static bool	init_window(t_game *game);
+static void	normalize_window_size(t_game *game);
 
 void	game_init(t_game *game)
 {
@@ -13,10 +14,10 @@ void	game_init(t_game *game)
 	game->display.width = 0;
 	game->window.height = 0;
 	game->window.width = 0;
-	game->window.top_left_y = 0;
-	game->window.top_left_x = 0;
-	game->window.bot_right_y = 0;
-	game->window.bot_right_x = 0;
+	game->window.y_start = 0;
+	game->window.x_start = 0;
+	game->window.y_end = 0;
+	game->window.x_end = 0;
 	game->mlx_ptr = NULL;
 	game->mlx_win = NULL;
 	i = 0;
@@ -52,7 +53,7 @@ bool	game_launch(t_game *game)
 	return (true);
 }
 
-# include <stdio.h>
+# include <stdio.h>	// TMP: remove before submit
 static bool	init_window(t_game *game)
 {
 	mlx_get_screen_size(
@@ -65,16 +66,46 @@ static bool	init_window(t_game *game)
 		print_err(false, "mlx_get_screen_size() returned negative values");
 		return (false);
 	}
-	fprintf(stderr, "width = %i | height = %i\n", game->display.width, game->display.height);
+	fprintf(stderr, "===> MAP     => width = %4zu | height = %4zu\n", game->map.width, game->map.height);
+	fprintf(stderr, "===> DISPLAY => width = %4i | height = %4i\n", game->display.width, game->display.height);
+	normalize_window_size(game);
+	fprintf(stderr, "===> WINDOW  => width = %4zu | height = %4zu | y_start = %zu | x_start = %zu | y_end = %zu | x_end = %zu\n",
+		game->window.width, game->window.height, game->window.y_start, game->window.x_start, game->window.y_end, game->window.x_end);
 	game->mlx_win = mlx_new_window(
 		game->mlx_ptr,
-		(int)(SPRITE_SIZE * game->map.width),
-		(int)(SPRITE_SIZE * game->map.height),
+		(int)game->window.width,
+		(int)game->window.height,
 		(char *)"so_long"
 	);
 	if (!game->mlx_win)
 		return (print_err(true, "Window init failed"), false);
 	return (true);
+}
+
+static void	normalize_window_size(t_game *game)
+{
+	size_t	basic_height;
+	size_t	basic_width;
+
+	basic_height = SPRITE_SIZE * game->map.height;
+	basic_width = SPRITE_SIZE * game->map.width;
+	if (basic_height < (size_t)game->display.height && basic_width < (size_t)game->display.width)
+	{
+		game->window.height = basic_height;
+		game->window.width = basic_width;
+		game->window.y_start = 0;
+		game->window.x_start = 0;
+		game->window.y_end = game->map.height - 1;
+		game->window.x_end = game->map.width - 1;
+		return ;
+	}
+	game->window.height = (size_t)game->display.height - 70;
+	game->window.width = (size_t)game->display.width;
+	// TODO: adapt the following values to player position
+	game->window.y_start = 0;
+	game->window.x_start = 0;
+	game->window.y_end = game->window.height / SPRITE_SIZE;
+	game->window.x_end = game->window.width / SPRITE_SIZE;
 }
 
 void	game_free(t_game *game)
