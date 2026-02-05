@@ -1,10 +1,10 @@
 # REQUIRED
 
-- **PLAYER**			⇢ Xavier en tenue de prisonnier (orange car cliché et visible)
-- **FLOOR**				⇢ Béton gris (prison)
-- **WALL**				⇢ Barreaux noirs (prison)
-- **COLLECTIBLES**		⇢ Billets (verts $ / violets €)
-- **EXIT**				⇢ Porte de prison (Bernard Arnault qui lui tend la main depuis l'extérieur ??)
+- [OK] **PLAYER**			⇢ Xavier en tenue de prisonnier (orange car cliché et visible)
+- [OK] **FLOOR**			⇢ Béton gris (prison)
+- [OK] **WALL**				⇢ Barreaux noirs (prison)
+- [OK] **COLLECTIBLES**		⇢ Billets (verts $ / violets €)
+- [OK] **EXIT**				⇢ Porte de prison (Bernard Arnault qui lui tend la main depuis l'extérieur ??)
 
 # BONUS
 
@@ -25,13 +25,8 @@
 
 # CONVERT
 
-`convert input.png output.xpm`
-`convert input.png -resize 64x64 output.xpm`
-`convert input.png -resize 64x64^ -gravity center -extent 64x64 output.xpm`
 ```bash
-for img in *.png; do
-	convert "$img" -resize 64x64 "${img%.png}.xpm"
-done
+magick <source_img> -resize 64x64! -gravity center <output_img>
 ```
 
 ---
