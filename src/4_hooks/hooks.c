@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "so_long.h"
+#include "mlx.h"
 #include <stdlib.h>
 
 static void	move_player(t_game *game, size_t new_y, size_t new_x);
