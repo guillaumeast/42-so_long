@@ -19,10 +19,7 @@ int	handle_key_press(int event_data, void *param)
 	else if (event_data == KEY_RIGHT)
 		move_player(game, game->player.y, game->player.x + 1);
 	else if (event_data == KEY_ESC)
-	{
 		mlx_loop_end(game->context);
-		game_free(game);
-	}
 	return (0);
 }
 
@@ -52,10 +49,7 @@ static void	move_player(t_game *game, size_t new_y, size_t new_x)
 		}
 	}
 	if (game->collectibles_count == 0 && game->map.grid[new_y][new_x] == 'E')
-	{
 		mlx_loop_end(game->context);
-		game_free(game);
-	}
 	ft_printf("Moves = %i\n", (int)game->moves_count);
 }
 
