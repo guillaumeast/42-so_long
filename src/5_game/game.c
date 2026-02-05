@@ -54,15 +54,11 @@ bool	game_launch(t_game *game)
 
 static bool	init_window(t_game *game)
 {
-	if (!mlx_get_screen_size(
+	mlx_get_screen_size(
 		game->mlx_ptr,
 		&game->display.width,
 		&game->display.height
-	))
-	{
-		print_err(false, "mlx_get_screen_size() failed");
-		return (false);
-	}
+	);
 	if (game->display.width < 0 || game->display.height < 0)
 	{
 		print_err(false, "mlx_get_screen_size() returned negative values");
