@@ -82,6 +82,7 @@ static bool	init_window(t_game *game)
 	return (true);
 }
 
+#define WINDOW_PADDING 100
 static void	normalize_window_size(t_game *game)
 {
 	size_t	basic_height;
@@ -89,7 +90,7 @@ static void	normalize_window_size(t_game *game)
 
 	basic_height = SPRITE_SIZE * game->map.height;
 	basic_width = SPRITE_SIZE * game->map.width;
-	if (basic_height < (size_t)game->display.height && basic_width < (size_t)game->display.width)
+	if (basic_height < (size_t)game->display.height - WINDOW_PADDING && basic_width < (size_t)game->display.width - WINDOW_PADDING)
 	{
 		game->window.height = basic_height;
 		game->window.width = basic_width;
@@ -99,8 +100,8 @@ static void	normalize_window_size(t_game *game)
 		game->window.x_end = game->map.width - 1;
 		return ;
 	}
-	game->window.height = (size_t)game->display.height - 70;
-	game->window.width = (size_t)game->display.width;
+	game->window.height = (size_t)game->display.height - WINDOW_PADDING;
+	game->window.width = (size_t)game->display.width - WINDOW_PADDING;
 	// TODO: adapt the following values to player position
 	game->window.y_start = 0;
 	game->window.x_start = 0;
