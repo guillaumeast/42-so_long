@@ -3,15 +3,6 @@
 #include "so_long.h"
 #include <stdlib.h>
 
-#define SPRITE_FLOOR		"sprites/floor/floor.xpm"
-#define SPRITE_TOP_BOT		"sprites/wall/border_top_bot.xpm"
-#define SPRITE_LEFT_RIGHT	"sprites/wall/border_left_right.xpm"
-#define SPRITE_WALL			"sprites/wall/wall_dark_2.xpm"
-#define SPRITE_COLLEC		"sprites/collectible/collectible.xpm"
-#define SPRITE_EXIT_CLOSE	"sprites/exit/exit_close.xpm"
-#define SPRITE_EXIT_OPEN	"sprites/exit/exit_open.xpm"
-#define SPRITE_PLAYER		"sprites/player/player.xpm"
-
 static bool	sprite_load(void **sprites, t_sprite sprite, void *context);
 
 void	sprite_init_all(void **sprites)
@@ -41,14 +32,6 @@ bool	sprite_load_all(void **sprites, void *context)
 	return (true);
 }
 
-/*
-*	Load a given sprite.
-*
-*	Does print error message.
-*	Does NOT free all sprites on failure.
-*
-*	WARNING: sprites must have been initialized with sprite_init_all().
-*/
 static bool	sprite_load(void **sprites, t_sprite sprite, void *context)
 {
 	const char	*file;

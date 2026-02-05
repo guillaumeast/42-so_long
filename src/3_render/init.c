@@ -9,8 +9,11 @@ void	render_init(t_game *game)
 	size_t	y;
 	size_t	x;
 
+	print_title("render_init()");
 	add_floor(game);
+	print_pass("floor added\n");
 	add_borders(game);
+	print_pass("borders added\n");
 	y = 1;
 	while (y < game->map.height - 1)
 	{
@@ -29,6 +32,7 @@ void	render_init(t_game *game)
 		}
 		y++;
 	}
+	print_result("render inited");
 }
 
 static void	add_floor(t_game *game)

@@ -1,19 +1,33 @@
-NAME		:= so_long
-CC			:= cc
-CFLAGS		= -Wall -Wextra -Werror -O2 -g3 -fsanitize=address
+NAME			:= so_long
+CC				:= cc
+CFLAGS			:= -Wall -Wextra -Werror -O2 -g3 -fsanitize=address
 
-LIBFT_DIR	:= libft
-LIBFT		:= $(LIBFT_DIR)/libft.a
+# ================= OS SWITCH ================= #
 
-LIBS		:= $(LIBFT) -Lmlx -lmlx -framework OpenGL -framework AppKit
+UNAME_S			:= $(shell uname -s)
 
-SRCS		:= \
-	$(wildcard logs/*.c) \
-	$(wildcard src/*.c) \
-	$(wildcard src/*/*.c)
-INCLUDES	:= \
-	-Imlx \
+ifeq ($(UNAME_S),Darwin)
+	MLX_DIR		:= mlx-mac
+	MLX_LIBS	:= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+	SRCS		:= $(wildcard logs/*.c) $(wildcard src/*.c) $(wildcard src/*/*.c)
+else ifeq ($(UNAME_S),Linux)
+	MLX_DIR		:= mlx-linux
+	MLX_LIBS	:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+	SRCS		:= $(wildcard logs/*.c) src/main.c $(wildcard src/*/*.c)
+else
+	$(error Unsupported OS)
+endif
+
+# ================== SOURCES ================== #
+
+LIBFT_DIR		:= libft
+LIBFT			:= $(LIBFT_DIR)/libft.a
+
+LIBS			:= $(LIBFT) $(MLX_LIBS)
+
+INCLUDES		:= \
 	-I$(LIBFT_DIR) \
+	-I$(MLX_DIR) \
 	-Ilogs \
 	-Isrc \
 	-Isrc/1_map \
@@ -22,10 +36,12 @@ INCLUDES	:= \
 	-Isrc/4_hooks \
 	-Isrc/5_game
 
-OBJ_DIR		:= obj
-OBJS		:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR			:= obj
+OBJS			:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-MY_TESTER	:= ./tests/test.zsh
+MY_TESTER		:= ./tests/test.zsh
+
+# ================= RULES ================= #
 
 all: $(NAME)
 

@@ -1,11 +1,10 @@
 # TODO
 
-- Handle correctly window closing with red cross (event 17 askip)
+- Max window size (caméra if needed)
+- Win screen
 - Handle all possible window sizes (camera !)
-- Ajouter un sprite pour la sortie closed (les COLLECTIBLES n'ont pas tous étés récupérés) vs la sortie open
-- Gérer la récupération des collectibles
-- Print le nombre de moves dans le terminal
-- Gérer la fin de partie
+- Animations
+- Menu ?
 
 # QUESTIONS
 

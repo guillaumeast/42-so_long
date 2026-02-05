@@ -2,10 +2,10 @@
 #include "so_long.h"
 #include <stdlib.h>
 
+# include "logs.h"
+
 int	main(int argc, char **argv)
 {
-	t_map		map;
-	t_object	player;
 	t_game		game;
 
 	if (argc != 2)
@@ -13,10 +13,13 @@ int	main(int argc, char **argv)
 		fprint_err(false, "Usage", "%s <map.ber>", argv[0]);
 		return (EXIT_FAILURE);
 	}
-	if (!map_load(&map, argv[1], &player))
+	print_start(99, NULL);
+	game_init(&game);
+	if (!map_load(&game, argv[1]))
 		return (EXIT_FAILURE);
-	if (!game_launch(&game, &map, &player))
+	if (!game_launch(&game))
 		return (EXIT_FAILURE);
-	map_free(&map);
+	game_free(&game);
+	print_stop();
 	return (EXIT_SUCCESS);
 }

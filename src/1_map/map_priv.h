@@ -10,32 +10,12 @@ typedef struct s_flood
 	bool	exit;
 }	t_flood;
 
-/* ************************************************************************* */
-/*                                  CHECK.C                                  */
-/* ************************************************************************* */
+/* --- check.c --- */
 
-/*
-*	Checks the map validity and populates counters.
-*
-*	Does print error message.
-*	Does NOT free map on failure.
-*
-*	WARNING: map must have been loaded with map_load().
-*/
-bool	map_check(t_map *map, t_object *player);
+bool	map_check(t_game *game);
 
-/* ************************************************************************* */
-/*                                FLOOD_FILL.C                               */
-/* ************************************************************************* */
+/* --- flood_fill.c --- */
 
-/*
-*	Checks if all collectibles and exit are reachable.
-*
-*	Does print error message.
-*	Does NOT free map on failure.
-*
-*	WARNING: map must have been loaded with map_load().
-*/
-bool	map_has_valid_path(t_map *map, t_object *player);
+bool	map_has_valid_path(t_game *game);
 
 #endif
