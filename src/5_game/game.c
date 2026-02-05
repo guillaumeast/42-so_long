@@ -52,6 +52,7 @@ bool	game_launch(t_game *game)
 	return (true);
 }
 
+# include <stdio.h>
 static bool	init_window(t_game *game)
 {
 	mlx_get_screen_size(
@@ -64,6 +65,7 @@ static bool	init_window(t_game *game)
 		print_err(false, "mlx_get_screen_size() returned negative values");
 		return (false);
 	}
+	fprintf(stderr, "width = %i | height = %i\n", game->display.width, game->display.height);
 	game->mlx_win = mlx_new_window(
 		game->mlx_ptr,
 		(int)(SPRITE_SIZE * game->map.width),
