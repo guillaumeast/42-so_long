@@ -55,9 +55,11 @@ static void	move_player(t_game *game, size_t new_y, size_t new_x)
 
 int handle_window_close(int event_data, void *param)
 {
+	t_game	*game;
+
 	(void)event_data;
-	(void)param;
-	// TODO: SEGV quand call game_free() ici, selon chatGPT c'est normal, il suffit d'exit....
+	game = (t_game *)param;
 	print_result("window closed");
-	exit(EXIT_SUCCESS);
+	mlx_loop_end(game->context);
+	return (0);
 }
