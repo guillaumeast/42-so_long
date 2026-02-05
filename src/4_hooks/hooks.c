@@ -56,26 +56,9 @@ static void	move_player(t_game *game, size_t new_y, size_t new_x)
 int handle_window_close(void *param)
 {
 	t_game	*game;
-	// size_t	i;
 
 	game = (t_game *)param;
 	print_result("window closed");
 	mlx_loop_end(game->context);
-	// if (game->map.grid)
-	// 	str_array_free(&game->map.grid);
-	// if (game->context)
-	// {
-	// 	i = 0;
-	// 	while (i < SPRITE_COUNT && game->sprites[i])
-	// 	{
-	// 		mlx_destroy_image(game->context, game->sprites[i]);
-	// 		i++;
-	// 	}
-	// 	if (game->window)
-	// 		mlx_destroy_window(game->context, game->window);
-	// 	mlx_destroy_display(game->context);
-	// }
-	// free(game->context);
-	// exit(EXIT_SUCCESS);
 	return (0);
 }

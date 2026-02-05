@@ -15,6 +15,7 @@
 # TESTS
 
 - Add missing wall at top / bot / left /right
+- Add empty map
 
 # SUBMIT
 

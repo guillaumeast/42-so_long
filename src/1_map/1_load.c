@@ -19,6 +19,11 @@ bool	map_load(t_game *game, char *map_path)
 	print_pass("map read\n");
 	if (!check_empty_lines(&buff))
 		return (buff_free(&buff), false);
+	if (!buff_append(&buff, "\0", 1))
+	{
+		fprint_err(true, "Unable to NULL terminate map", " '%s'", map_path);
+		return (buff_free(&buff), false);
+	}
 	game->map.grid = str_split(buff.data, '\n');
 	if (!game->map.grid)
 	{
@@ -59,6 +64,11 @@ static bool	check_empty_lines(t_buff *buff)
 {
 	size_t	i;
 
+	if (buff->len == 0)
+	{
+		print_err(false, "Map is empty.");
+		return (false);
+	}
 	if (buff->data[0] == '\n')
 	{
 		print_err(false, "Map must not contain empty lines.");
