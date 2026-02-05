@@ -1,8 +1,6 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include "logs.h"	// TMP: remove before submit
-
 # include <stdbool.h>
 # include <stddef.h>
 
@@ -67,10 +65,28 @@ typedef struct s_map
 	size_t	height;
 }	t_map;
 
+typedef struct s_display
+{
+	int	height;
+	int	width;
+}	t_display;
+
+typedef struct s_window
+{
+	size_t	height;
+	size_t	width;
+	size_t	top_left_y;
+	size_t	top_left_x;
+	size_t	bot_right_y;
+	size_t	bot_right_x;
+}	t_window;
+
 typedef struct s_game
 {
-	void		*context;
-	void		*window;
+	t_display	display;
+	t_window	window;
+	void		*mlx_ptr;
+	void		*mlx_win;
 	void		*sprites[SPRITE_COUNT];
 	t_map 		map;
 	t_object	player;
@@ -90,8 +106,8 @@ bool	map_load(t_game *game, char *map_path);
 /* ************************************************************************* */
 
 void	sprite_init_all(void **sprites);
-bool	sprite_load_all(void **sprites, void *context);
-void	sprite_free_all(void **sprites, void *context);
+bool	sprite_load_all(void **sprites, void *mlx_ptr);
+void	sprite_free_all(void **sprites, void *mlx_ptr);
 
 /* ************************************************************************* */
 /*                                    GAME                                   */

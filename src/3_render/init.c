@@ -1,19 +1,16 @@
 #include "mlx.h"
 #include "so_long.h"
 
-static void	add_floor(t_game *game);
-static void	add_borders(t_game *game);
+static void	render_floor(t_game *game);
+static void	render_borders(t_game *game);
 
 void	render_init(t_game *game)
 {
 	size_t	y;
 	size_t	x;
 
-	print_title("render_init()");
-	add_floor(game);
-	print_pass("floor added\n");
-	add_borders(game);
-	print_pass("borders added\n");
+	render_floor(game);
+	render_borders(game);
 	y = 1;
 	while (y < game->map.height - 1)
 	{
@@ -32,10 +29,9 @@ void	render_init(t_game *game)
 		}
 		y++;
 	}
-	print_result("render inited");
 }
 
-static void	add_floor(t_game *game)
+static void	render_floor(t_game *game)
 {
 	size_t	y;
 	size_t	x;
@@ -53,7 +49,7 @@ static void	add_floor(t_game *game)
 	}
 }
 
-static void	add_borders(t_game *game)
+static void	render_borders(t_game *game)
 {
 	size_t	i;
 
@@ -80,6 +76,11 @@ void	render_sprite(t_game *game, t_sprite sprite, size_t y, size_t x)
 
 	normed_y = y * SPRITE_SIZE;
 	normed_x = x * SPRITE_SIZE;
-	mlx_put_image_to_window(game->context, game->window, game->sprites[sprite],
-		(int)normed_x, (int)normed_y);
+	mlx_put_image_to_window(
+		game->mlx_ptr,
+		game->mlx_win,
+		game->sprites[sprite],
+		(int)normed_x,
+		(int)normed_y
+	);
 }

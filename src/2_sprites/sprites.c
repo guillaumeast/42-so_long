@@ -3,7 +3,7 @@
 #include "so_long.h"
 #include <stdlib.h>
 
-static bool	sprite_load(void **sprites, t_sprite sprite, void *context);
+static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr);
 
 void	sprite_init_all(void **sprites)
 {
@@ -17,22 +17,22 @@ void	sprite_init_all(void **sprites)
 	}
 }
 
-bool	sprite_load_all(void **sprites, void *context)
+bool	sprite_load_all(void **sprites, void *mlx_ptr)
 {
-	if (!sprite_load(sprites, FLOOR, context)
-		|| !sprite_load(sprites, TOP_BOT, context)
-		|| !sprite_load(sprites, LEFT_RIGHT, context)
-		|| !sprite_load(sprites, WALL, context)
-		|| !sprite_load(sprites, COLLEC, context)
-		|| !sprite_load(sprites, EXIT_CLOSE, context)
-		|| !sprite_load(sprites, EXIT_OPEN, context)
-		|| !sprite_load(sprites, PLAYER, context)
+	if (!sprite_load(sprites, FLOOR, mlx_ptr)
+		|| !sprite_load(sprites, TOP_BOT, mlx_ptr)
+		|| !sprite_load(sprites, LEFT_RIGHT, mlx_ptr)
+		|| !sprite_load(sprites, WALL, mlx_ptr)
+		|| !sprite_load(sprites, COLLEC, mlx_ptr)
+		|| !sprite_load(sprites, EXIT_CLOSE, mlx_ptr)
+		|| !sprite_load(sprites, EXIT_OPEN, mlx_ptr)
+		|| !sprite_load(sprites, PLAYER, mlx_ptr)
 	)
-		return (sprite_free_all(sprites, context), false);
+		return (sprite_free_all(sprites, mlx_ptr), false);
 	return (true);
 }
 
-static bool	sprite_load(void **sprites, t_sprite sprite, void *context)
+static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr)
 {
 	const char	*file;
 	int			width;
@@ -56,7 +56,7 @@ static bool	sprite_load(void **sprites, t_sprite sprite, void *context)
 		file = SPRITE_PLAYER;
 	else
 		return (false);
-	sprites[sprite] = mlx_xpm_file_to_image(context, (char *)file, &width, &height);
+	sprites[sprite] = mlx_xpm_file_to_image(mlx_ptr, (char *)file, &width, &height);
 	if (!sprites[sprite])
 		return (fprint_err(true, "Sprite loading failed", " %s", file), false);
 	if(width != SPRITE_SIZE || height != SPRITE_SIZE)
@@ -66,17 +66,17 @@ static bool	sprite_load(void **sprites, t_sprite sprite, void *context)
 	return (true);
 }
 
-void	sprite_free_all(void **sprites, void *context)
+void	sprite_free_all(void **sprites, void *mlx_ptr)
 {
 	size_t	i;
 
-	if (!sprites || !context)
+	if (!sprites || !mlx_ptr)
 		return ;
 	i = 0;
 	while (i < SPRITE_COUNT)
 	{
 		if (sprites[i])
-			mlx_destroy_image(context, sprites[i]);
+			mlx_destroy_image(mlx_ptr, sprites[i]);
 		i++;
 	}
 }
