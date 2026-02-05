@@ -106,7 +106,7 @@ void	game_free(t_game *game);
 /* ************************************************************************* */
 
 int	handle_key_press(int event_data, void *param);
-int handle_window_close(int event_data, void *param);
+int handle_window_close(void *param);
 
 /* ************************************************************************* */
 /*                                   RENDER                                  */

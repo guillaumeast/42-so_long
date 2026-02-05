@@ -53,16 +53,16 @@ static void	move_player(t_game *game, size_t new_y, size_t new_x)
 	ft_printf("Moves = %i\n", (int)game->moves_count);
 }
 
-int handle_window_close(int event_data, void *param)
+int handle_window_close(void *param)
 {
 	t_game	*game;
 	// size_t	i;
 
-	(void)event_data;
 	game = (t_game *)param;
 	print_result("window closed");
-	if (game->map.grid)
-		str_array_free(&game->map.grid);
+	mlx_loop_end(game->context);
+	// if (game->map.grid)
+	// 	str_array_free(&game->map.grid);
 	// if (game->context)
 	// {
 	// 	i = 0;
@@ -76,5 +76,6 @@ int handle_window_close(int event_data, void *param)
 	// 	mlx_destroy_display(game->context);
 	// }
 	// free(game->context);
-	exit(EXIT_SUCCESS);
+	// exit(EXIT_SUCCESS);
+	return (0);
 }
