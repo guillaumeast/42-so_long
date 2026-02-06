@@ -4,11 +4,11 @@
 #include <unistd.h>
 
 static bool	check_map(t_game *game);
-static bool	check_cell(t_game *game, size_t y, size_t x);
+static bool	check_cell(t_game *game, int y, int x);
 
 bool	map_check(t_game *game)
 {
-	size_t	i;
+	int	i;
 
 	// Check first line chars
 	while (game->map.grid[0][game->map.width])
@@ -33,8 +33,8 @@ bool	map_check(t_game *game)
 
 static bool	check_map(t_game *game)
 {
-	size_t	y;
-	size_t	x;
+	int	y;
+	int	x;
 
 	y = 1;
 	while (y < game->map.height)
@@ -60,7 +60,7 @@ static bool	check_map(t_game *game)
 	return (true);
 }
 
-static bool	check_cell(t_game *game, size_t y, size_t x)
+static bool	check_cell(t_game *game, int y, int x)
 {
 	char	cell;
 

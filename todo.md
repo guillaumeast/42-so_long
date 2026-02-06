@@ -1,10 +1,9 @@
 # TODO
 
-- Max window size (caméra if needed)
+- Print nombre de moves à l'écran
 - Win screen
-- Handle all possible window sizes (camera !)
 - Animations
-- Menu ?
+- Ennemis, niveaux bonus etc
 
 # QUESTIONS
 

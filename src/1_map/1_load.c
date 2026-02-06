@@ -35,7 +35,7 @@ bool	map_load(t_game *game, char *map_path)
 	if (!map_check(game))
 		return (false);
 	print_pass("map checked\n");
-	print_result("map loaded (h = %zu | w = %zu)", game->map.height, game->map.width);
+	print_result("map loaded (h = %i | w = %i)", game->map.height, game->map.width);
 	return (true);
 }
 

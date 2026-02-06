@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 static bool	flood_init(t_flood *flood, t_map *map);
-static bool	flood_exec(t_flood *flood, t_game *game, size_t y, size_t x);
+static bool	flood_exec(t_flood *flood, t_game *game, int y, int x);
 static void	flood_free(t_flood *flood);
 
 bool	map_has_valid_path(t_game *game)
@@ -28,20 +28,20 @@ bool	map_has_valid_path(t_game *game)
 
 static bool	flood_init(t_flood *flood, t_map *map)
 {
-	size_t	y;
+	int	y;
 
-	flood->visited = malloc((map->height + 1) * sizeof * flood->visited);
+	flood->visited = malloc((size_t)(map->height + 1) * sizeof * flood->visited);
 	if (!flood->visited)
 		return (fprint_err(true, "Failed alloc",
-		" of %zu bytes", (map->height + 1) * sizeof * flood->visited), false);
+		" of %i bytes", (map->height + 1) * (int)sizeof * flood->visited), false);
 	y = 0;
 	while (y < map->height)
 	{
-		flood->visited[y] = malloc(map->width * sizeof ** flood->visited);
+		flood->visited[y] = malloc((size_t)map->width * sizeof ** flood->visited);
 		if (!flood->visited[y])
-			return (fprint_err(true, "Failed alloc", "of %zu bytes at index %zu"
-			, map->width * sizeof ** flood->visited, y), false);
-		ft_memset(flood->visited[y], false, map->width);
+			return (fprint_err(true, "Failed alloc", "of %i bytes at index %i"
+			, map->width * (int)sizeof ** flood->visited, y), false);
+		ft_memset(flood->visited[y], false, (size_t)map->width);
 		y++;
 	}
 	flood->visited[y] = NULL;
@@ -50,7 +50,7 @@ static bool	flood_init(t_flood *flood, t_map *map)
 	return (true);
 }
 
-static bool	flood_exec(t_flood *flood, t_game *game, size_t y, size_t x)
+static bool	flood_exec(t_flood *flood, t_game *game, int y, int x)
 {
 	char	cell;
 

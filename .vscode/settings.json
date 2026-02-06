@@ -9,8 +9,9 @@
 		"-I${workspaceFolder}/src",
 		"-I${workspaceFolder}/1_map",
 		"-I${workspaceFolder}/2_sprites",
-		"-I${workspaceFolder}/3_render",
-		"-I${workspaceFolder}/4_hooks",
-		"-I${workspaceFolder}/5_game"
+		"-I${workspaceFolder}/3_window",
+		"-I${workspaceFolder}/4_render",
+		"-I${workspaceFolder}/5_hooks",
+		"-I${workspaceFolder}/6_game"
 	]
 }

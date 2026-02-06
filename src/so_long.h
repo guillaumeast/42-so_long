@@ -54,36 +54,31 @@ typedef enum e_sprite
 
 typedef struct s_object
 {
-	size_t		y;
-	size_t		x;
+	int		y;
+	int		x;
 }	t_object;
 
 typedef struct s_map
 {
 	char	**grid;
-	size_t	width;
-	size_t	height;
+	int		width;
+	int		height;
 }	t_map;
-
-typedef struct s_display
-{
-	int	height;
-	int	width;
-}	t_display;
 
 typedef struct s_window
 {
-	size_t	height;
-	size_t	width;
-	size_t	y_start;
-	size_t	x_start;
-	size_t	y_end;
-	size_t	x_end;
+	int		height;
+	int		width;
+	bool	cropped;
+	bool	moved;
+	int		y_start;
+	int		x_start;
+	int		y_end;
+	int		x_end;
 }	t_window;
 
 typedef struct s_game
 {
-	t_display	display;
 	t_window	window;
 	void		*mlx_ptr;
 	void		*mlx_win;
@@ -94,6 +89,12 @@ typedef struct s_game
 	size_t		collectibles_count;
 	size_t		moves_count;
 }	t_game;
+
+/* ************************************************************************* */
+/*                                   TIME                                    */
+/* ************************************************************************* */
+
+size_t	get_time_in_ms(t_game *game);
 
 /* ************************************************************************* */
 /*                                    MAP                                    */
@@ -110,12 +111,18 @@ bool	sprite_load_all(void **sprites, void *mlx_ptr);
 void	sprite_free_all(void **sprites, void *mlx_ptr);
 
 /* ************************************************************************* */
-/*                                    GAME                                   */
+/*                                  WINDOW                                   */
 /* ************************************************************************* */
 
-bool	game_launch(t_game *game);
-void	game_init(t_game *game);
-void	game_free(t_game *game);
+bool	window_init(t_game *game);
+void	window_center(t_game *game);
+
+/* ************************************************************************* */
+/*                                   RENDER                                  */
+/* ************************************************************************* */
+
+void	render_all(t_game *game);
+void	render_sprite(t_game *game, t_sprite sprite, int y, int x);
 
 /* ************************************************************************* */
 /*                                   HOOKS                                   */
@@ -125,10 +132,11 @@ int	handle_key_press(int event_data, void *param);
 int handle_window_close(void *param);
 
 /* ************************************************************************* */
-/*                                   RENDER                                  */
+/*                                    GAME                                   */
 /* ************************************************************************* */
 
-void	render_init(t_game *game);
-void	render_sprite(t_game *game, t_sprite sprite, size_t y, size_t x);
+bool	game_launch(t_game *game);
+void	game_init(t_game *game);
+void	game_free(t_game *game);
 
 #endif

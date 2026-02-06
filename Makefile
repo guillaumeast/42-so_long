@@ -38,9 +38,10 @@ INCLUDES		:= \
 	-Isrc \
 	-Isrc/1_map \
 	-Isrc/2_sprites \
-	-Isrc/3_render \
-	-Isrc/4_hooks \
-	-Isrc/5_game
+	-Isrc/3_window \
+	-Isrc/4_render \
+	-Isrc/5_hooks \
+	-Isrc/6_game
 
 OBJ_DIR			:= obj
 OBJS			:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
