@@ -1,4 +1,5 @@
 #include "so_long.h"
+#include "mlx.h"
 #include "libft.h"
 #include <stdlib.h>
 #include <sys/time.h>
