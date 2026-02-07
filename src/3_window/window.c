@@ -5,8 +5,8 @@
 # include <stdio.h>
 #include <stdlib.h>
 
-#define WINDOW_PADDING 100
-#define PLAYER_PADDING 2
+#define WINDOW_PADDING	100
+#define PLAYER_PADDING	2
 
 static void	window_crop(t_game *game, int display_height, int display_width);
 static void	center_y(t_game *game);
@@ -31,6 +31,7 @@ bool	window_init(t_game *game)
 		(char *)"so_long"
 	);
 	window_center(game);
+	render_hud_background(game);
 	render_all(game);
 	game->window.moved = false;
 	if (!game->mlx_win)
@@ -40,8 +41,7 @@ bool	window_init(t_game *game)
 
 static void	window_crop(t_game *game, int display_height, int display_width)
 {
-	fprintf(stderr, "window_crop()\n");
-	game->window.height = SPRITE_SIZE * game->map.height;
+	game->window.height = SPRITE_SIZE * game->map.height + HUD_HEIGHT;
 	game->window.width = SPRITE_SIZE * game->map.width;
 	game->window.y_start = 0;
 	game->window.x_start = 0;
@@ -50,7 +50,6 @@ static void	window_crop(t_game *game, int display_height, int display_width)
 	if (game->window.height <= display_height - WINDOW_PADDING && game->window.width <= display_width - WINDOW_PADDING)
 	{
 		game->window.cropped = false;
-		fprintf(stderr, "NOT CROPPED \n\n");
 		return ;
 	}
 	game->window.cropped = true;
@@ -64,7 +63,6 @@ static void	window_crop(t_game *game, int display_height, int display_width)
 		game->window.x_end--;
 		game->window.width -= SPRITE_SIZE;
 	}
-	fprintf(stderr, "CROPPED \n\n");
 }
 
 void	window_center(t_game *game)

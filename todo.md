@@ -1,9 +1,9 @@
 # TODO
 
-- Print nombre de moves à l'écran
 - Win screen
 - Animations
 - Ennemis, niveaux bonus etc
+- check .ber (à la fin du fichier !)
 
 # QUESTIONS
 

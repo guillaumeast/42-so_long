@@ -4,39 +4,45 @@
 # include <stdbool.h>
 # include <stddef.h>
 
-#define SPRITE_FLOOR		"sprites/floor/floor.xpm"
-#define SPRITE_TOP_BOT		"sprites/wall/border_top_bot.xpm"
-#define SPRITE_LEFT_RIGHT	"sprites/wall/border_left_right.xpm"
-#define SPRITE_WALL			"sprites/wall/wall_dark_2.xpm"
-#define SPRITE_COLLEC		"sprites/collectible/collectible.xpm"
-#define SPRITE_EXIT_CLOSE	"sprites/exit/exit_close.xpm"
-#define SPRITE_EXIT_OPEN	"sprites/exit/exit_open.xpm"
-#define SPRITE_PLAYER		"sprites/player/player.xpm"
+# define HUD_HEIGHT				32
+# define HUD_TITLE_LEN			13
+# define HUD_Y_PADDING			2
+# define HUD_X_PADDING			2
 
-# define SPRITE_SIZE	64
-# define MAX_OBJ_COUNT	128
+# define LETTER_HEIGHT			28
+# define LETTER_WIDTH			16
+# define SPRITE_SIZE			64
+# define SPRITE_FLOOR			"sprites/floor/floor.xpm"
+# define SPRITE_TOP_BOT			"sprites/wall/border_top_bot.xpm"
+# define SPRITE_LEFT_RIGHT		"sprites/wall/border_left_right.xpm"
+# define SPRITE_WALL			"sprites/wall/wall_dark_2.xpm"
+# define SPRITE_COLLEC			"sprites/collectible/collectible.xpm"
+# define SPRITE_EXIT_CLOSE		"sprites/exit/exit_close.xpm"
+# define SPRITE_EXIT_OPEN		"sprites/exit/exit_open.xpm"
+# define SPRITE_PLAYER			"sprites/player/player.xpm"
+# define SPRITE_HUD_BACKGROUND	"sprites/font/background.xpm"
 
-# define KEY_PRESS		2
-# define KEY_PRESS_MASK	1
-# define WINDOW_CLOSE	17
+# define KEY_PRESS				2
+# define KEY_PRESS_MASK			1
+# define WINDOW_CLOSE			17
 
 # ifdef __APPLE__
-#  define KEY_LEFT	123
-#  define KEY_RIGHT	124
-#  define KEY_DOWN	125
-#  define KEY_UP	126
-#  define KEY_SPACE	49
-#  define KEY_ESC	53
+#  define KEY_LEFT				123
+#  define KEY_RIGHT				124
+#  define KEY_DOWN				125
+#  define KEY_UP				126
+#  define KEY_SPACE				49
+#  define KEY_ESC				53
 int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
 int mlx_loop_end (void *mlx_ptr);
 int	mlx_destroy_display(void *mlx_ptr);
 # else
-#  define KEY_LEFT	65361
-#  define KEY_RIGHT	65363
-#  define KEY_DOWN	65364
-#  define KEY_UP	65362
-#  define KEY_SPACE	32
-#  define KEY_ESC	65307
+#  define KEY_LEFT				65361
+#  define KEY_RIGHT				65363
+#  define KEY_DOWN				65364
+#  define KEY_UP				65362
+#  define KEY_SPACE				32
+#  define KEY_ESC				65307
 # endif
 
 typedef enum e_sprite
@@ -49,6 +55,7 @@ typedef enum e_sprite
 	EXIT_CLOSE,
 	EXIT_OPEN,
 	PLAYER,
+	HUD_BACKGROUND,
 	SPRITE_COUNT
 }	t_sprite;
 
@@ -83,6 +90,8 @@ typedef struct s_game
 	void		*mlx_ptr;
 	void		*mlx_win;
 	void		*sprites[SPRITE_COUNT];
+	void		*letters[26];
+	void		*numbers[10];
 	t_map 		map;
 	t_object	player;
 	t_object	exit;
@@ -106,9 +115,9 @@ bool	map_load(t_game *game, char *map_path);
 /*                                  SPRITES                                  */
 /* ************************************************************************* */
 
-void	sprite_init_all(void **sprites);
-bool	sprite_load_all(void **sprites, void *mlx_ptr);
-void	sprite_free_all(void **sprites, void *mlx_ptr);
+void	sprite_init_all(t_game *game);
+bool	sprite_load_all(t_game *game);
+void	sprite_free_all(t_game *game);
 
 /* ************************************************************************* */
 /*                                  WINDOW                                   */
@@ -121,7 +130,10 @@ void	window_center(t_game *game);
 /*                                   RENDER                                  */
 /* ************************************************************************* */
 
+void	render_hud_background(t_game *game);
 void	render_all(t_game *game);
+void	render_string(t_game *game, const char *string, size_t x);
+void	render_number(t_game *game, size_t number, int y, int x);
 void	render_sprite(t_game *game, t_sprite sprite, int y, int x);
 
 /* ************************************************************************* */

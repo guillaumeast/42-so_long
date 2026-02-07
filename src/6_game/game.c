@@ -5,20 +5,16 @@
 
 void	game_init(t_game *game)
 {
-	size_t	i;
-
+	game->mlx_ptr = NULL;
+	game->mlx_win = NULL;
+	game->map.grid = NULL;
+	sprite_init_all(game);
 	game->window.height = 0;
 	game->window.width = 0;
 	game->window.y_start = 0;
 	game->window.x_start = 0;
 	game->window.y_end = 0;
 	game->window.x_end = 0;
-	game->mlx_ptr = NULL;
-	game->mlx_win = NULL;
-	i = 0;
-	while (i < SPRITE_COUNT)
-		game->sprites[i++] = NULL;
-	game->map.grid = NULL;
 	game->map.width = 0;
 	game->map.height = 0;
 	game->player.x = 0;
@@ -34,7 +30,7 @@ bool	game_launch(t_game *game)
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
 		return (print_err(true, "Mlx init failed"), false);
-	if (!sprite_load_all(game->sprites, game->mlx_ptr))
+	if (!sprite_load_all(game))
 		return (false);
 	if (!window_init(game))
 		return (false);
@@ -49,18 +45,11 @@ bool	game_launch(t_game *game)
 
 void	game_free(t_game *game)
 {
-	size_t	i;
-
 	if (game->map.grid)
 		str_array_free(&game->map.grid);
 	if (game->mlx_ptr)
 	{
-		i = 0;
-		while (i < SPRITE_COUNT && game->sprites[i])
-		{
-			mlx_destroy_image(game->mlx_ptr, game->sprites[i]);
-			i++;
-		}
+		sprite_free_all(game);
 		if (game->mlx_win)
 			mlx_destroy_window(game->mlx_ptr, game->mlx_win);
 		mlx_destroy_display(game->mlx_ptr);

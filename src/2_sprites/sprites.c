@@ -3,32 +3,75 @@
 #include "so_long.h"
 #include <stdlib.h>
 
+static bool	sprite_load_letters(t_game *game);
 static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr);
 
-void	sprite_init_all(void **sprites)
+void	sprite_init_all(t_game *game)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < SPRITE_COUNT)
 	{
-		sprites[i] = NULL;
+		game->sprites[i] = NULL;
+		i++;
+	}
+	i = 0;
+	while (i < 26)
+	{
+		game->letters[i] = NULL;
+		i++;
+	}
+	i = 0;
+	while (i < 10)
+	{
+		game->numbers[i] = NULL;
 		i++;
 	}
 }
 
-bool	sprite_load_all(void **sprites, void *mlx_ptr)
+bool	sprite_load_all(t_game *game)
 {
-	if (!sprite_load(sprites, FLOOR, mlx_ptr)
-		|| !sprite_load(sprites, TOP_BOT, mlx_ptr)
-		|| !sprite_load(sprites, LEFT_RIGHT, mlx_ptr)
-		|| !sprite_load(sprites, WALL, mlx_ptr)
-		|| !sprite_load(sprites, COLLEC, mlx_ptr)
-		|| !sprite_load(sprites, EXIT_CLOSE, mlx_ptr)
-		|| !sprite_load(sprites, EXIT_OPEN, mlx_ptr)
-		|| !sprite_load(sprites, PLAYER, mlx_ptr)
-	)
-		return (sprite_free_all(sprites, mlx_ptr), false);
+	size_t	i;
+
+	i = 0;
+	while (i < SPRITE_COUNT)
+		if (!sprite_load(game->sprites, (t_sprite)i++, game->mlx_ptr))
+			return (false);
+	if (!sprite_load_letters(game))
+		return (false);
+	return (true);
+}
+
+static bool	sprite_load_letters(t_game *game)
+{
+	static char	path[19] = "sprites/font/X.xpm";
+	int			width;
+	int			height;
+	int			i;
+
+	i = 0;
+	while (i < 26)
+	{
+		path[13] = (char)('A' + i);
+		game->letters[i] = mlx_xpm_file_to_image(game->mlx_ptr, path, &width, &height);
+		if (!game->letters[i])
+			return (fprint_err(true, "Sprite loading failed", " %s", path), false);
+		if(width != LETTER_WIDTH || height != LETTER_HEIGHT)
+			return (fprint_err(false, "Invalid sprite size", " '%s': width = %i x height = %i (expected %i x %i)", path, width, height, LETTER_WIDTH, LETTER_HEIGHT), false);
+		i++;
+	}
+	i = 0;
+	while (i < 10)
+	{
+		path[13] = (char)('0' + i);
+		game->numbers[i] = mlx_xpm_file_to_image(game->mlx_ptr, path, &width, &height);
+		if (!game->numbers[i])
+			return (fprint_err(true, "Sprite loading failed", " %s", path), false);
+		if(width != LETTER_WIDTH || height != LETTER_HEIGHT)
+			return (fprint_err(false, "Invalid sprite size", " '%s': width = %i x height = %i (expected %i x %i)", path, width, height, LETTER_WIDTH, LETTER_HEIGHT), false);
+		i++;
+	}
 	return (true);
 }
 
@@ -54,29 +97,43 @@ static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr)
 		file = SPRITE_EXIT_OPEN;
 	else if (sprite == PLAYER)
 		file = SPRITE_PLAYER;
+	else if (sprite == HUD_BACKGROUND)
+		file = SPRITE_HUD_BACKGROUND;
 	else
 		return (false);
 	sprites[sprite] = mlx_xpm_file_to_image(mlx_ptr, (char *)file, &width, &height);
 	if (!sprites[sprite])
 		return (fprint_err(true, "Sprite loading failed", " %s", file), false);
-	if(width != SPRITE_SIZE || height != SPRITE_SIZE)
-		return (fprint_err(false, "Invalid sprite size",
-			" '%s': width = %i x height = %i (expected %i x %i)",
-			file, width, height, SPRITE_SIZE, SPRITE_SIZE), false);
+	if(sprite != HUD_BACKGROUND && (width != SPRITE_SIZE || height != SPRITE_SIZE))
+		return (fprint_err(false, "Invalid sprite size", " '%s': width = %i x height = %i (expected %i x %i)", file, width, height, SPRITE_SIZE, SPRITE_SIZE), false);
 	return (true);
 }
 
-void	sprite_free_all(void **sprites, void *mlx_ptr)
+void	sprite_free_all(t_game *game)
 {
 	size_t	i;
 
-	if (!sprites || !mlx_ptr)
+	if (!game->mlx_ptr)
 		return ;
 	i = 0;
 	while (i < SPRITE_COUNT)
 	{
-		if (sprites[i])
-			mlx_destroy_image(mlx_ptr, sprites[i]);
+		if (game->sprites[i])
+			mlx_destroy_image(game->mlx_ptr, game->sprites[i]);
+		i++;
+	}
+	i = 0;
+	while (i < 26)
+	{
+		if (game->letters[i])
+			mlx_destroy_image(game->mlx_ptr, game->letters[i]);
+		i++;
+	}
+	i = 0;
+	while (i < 10)
+	{
+		if (game->numbers[i])
+			mlx_destroy_image(game->mlx_ptr, game->numbers[i]);
 		i++;
 	}
 }

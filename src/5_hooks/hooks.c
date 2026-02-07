@@ -54,6 +54,7 @@ static void	move_player(t_game *game, int new_y, int new_x)
 	window_center(game);
 	if (game->window.moved)
 		render_all(game);
+	render_number(game, game->moves_count, HUD_Y_PADDING, HUD_X_PADDING + HUD_TITLE_LEN * LETTER_WIDTH);
 	ft_printf("Moves = %i\n", (int)game->moves_count);
 }
 
