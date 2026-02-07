@@ -1,15 +1,12 @@
 # TODO
 
+- Mettre floor en fond de tous les sprites et arrêter de rendre floor partout + sprite => rendre uniquement sprites
 - Win screen
 - Animations
-- Ennemis, niveaux bonus etc
-- check .ber (à la fin du fichier !)
-
-# QUESTIONS
-
-- Empty line at EOF is OK ??
-- Only accept `.ber` files ?!
-- Player fails if he doesn't take the "shortest possible route" ?!
+- Ennemis
+- Niveaux bonus
+- check `.ber` (à la fin du fichier !)
+- Installer funcheck (container + vm)
 
 # TESTS
 

@@ -10,14 +10,16 @@ static void	move_player(t_game *game, int new_y, int new_x);
 int	handle_key_press(int event_data, void *param)
 {
 	static size_t	min_time_next_allowed = 0;
+	static int		last_input;
 	size_t			current_time;
 	t_game			*game;
 
 	game = (t_game *)param;
 	current_time = get_time_in_ms(game);
-	if (min_time_next_allowed > current_time)
+	if (event_data == last_input && min_time_next_allowed > current_time)
 		return (0);
 	min_time_next_allowed = current_time + MIN_MS_BETWEEN_MOVES;
+	last_input = event_data;
 	if (event_data == KEY_UP)
 		move_player(game, game->player.y - 1, game->player.x);
 	else if (event_data == KEY_DOWN)
