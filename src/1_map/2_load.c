@@ -4,19 +4,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-# include "logs.h"
-
 static bool	read_map(t_buff *buff, char *map_path);
-static bool	check_empty_lines(t_buff *buff);
+static void	normalize_map(t_game *game);
+static void	normalize_cell(t_game *game, int x, int y);
 
 bool	map_load(t_game *game, char *map_path)
 {
 	t_buff	buff;
 
-	print_title("map_load()");
 	if (!read_map(&buff, map_path))
 		return (false);
-	print_pass("map read\n");
 	if (!check_empty_lines(&buff))
 		return (buff_free(&buff), false);
 	if (!buff_append(&buff, "\0", 1))
@@ -31,11 +28,9 @@ bool	map_load(t_game *game, char *map_path)
 		return (buff_free(&buff), false);
 	}
 	buff_free(&buff);
-	print_pass("map splitted\n");
 	if (!map_check(game))
 		return (false);
-	print_pass("map checked\n");
-	print_result("map loaded (h = %i | w = %i)", game->map.height, game->map.width);
+	normalize_map(game);
 	return (true);
 }
 
@@ -60,29 +55,44 @@ static bool	read_map(t_buff *buff, char *map_path)
 	return (true);
 }
 
-static bool	check_empty_lines(t_buff *buff)
+static void	normalize_map(t_game *game)
 {
-	size_t	i;
+	int	y;
+	int	x;
 
-	if (buff->len == 0)
+	y = 0;
+	while (y < game->map.height)
 	{
-		print_err(false, "Map is empty.");
-		return (false);
-	}
-	if (buff->data[0] == '\n')
-	{
-		print_err(false, "Map must not contain empty lines.");
-		return (false);
-	}
-	i = 0;
-	while (i < buff->len - 1)
-	{
-		if (buff->data[i] == '\n' && buff->data[i + 1] == '\n')
+		x = 0;
+		while (x < game->map.width)
 		{
-			print_err(false, "Map must not contain empty lines.");
-			return (false);
+			normalize_cell(game, x, y);
+			x++;
 		}
-		i++;
+		y++;
 	}
-	return (true);
+}
+
+static void	normalize_cell(t_game *game, int x, int y)
+{
+	char	cell;
+
+	cell = game->map.grid[y][x];
+	if (cell == FLOOR_CELL)
+		game->map.grid[y][x] = FLOOR;
+	else if (cell == COLLEC_CELL)
+		game->map.grid[y][x] = COLLEC;
+	else if (cell == EXIT_CELL)
+		game->map.grid[y][x] = EXIT_CLOSE;
+	else if (cell == PLAYER_CELL)
+		game->map.grid[y][x] = PLAYER;
+	else if (cell == WALL_CELL)
+	{
+		if (y == 0 || y == game->map.height - 1)
+			game->map.grid[y][x] = WALL_TOP_BOT;
+		else if (x == 0 || x == game->map.width - 1)
+			game->map.grid[y][x] = WALL_LEFT_RIGHT;
+		else
+			game->map.grid[y][x] = WALL;
+	}
 }

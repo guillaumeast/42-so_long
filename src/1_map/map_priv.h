@@ -1,6 +1,7 @@
 #ifndef MAP_PRIV_H
 # define MAP_PRIV_H
 
+# include "libft.h"
 # include "so_long.h"
 
 typedef struct s_flood
@@ -13,6 +14,7 @@ typedef struct s_flood
 /* --- check.c --- */
 
 bool	map_check(t_game *game);
+bool	check_empty_lines(t_buff *buff);
 
 /* --- flood_fill.c --- */
 

@@ -6,30 +6,6 @@
 static bool	sprite_load_letters(t_game *game);
 static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr);
 
-void	sprite_init_all(t_game *game)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < SPRITE_COUNT)
-	{
-		game->sprites[i] = NULL;
-		i++;
-	}
-	i = 0;
-	while (i < 26)
-	{
-		game->letters[i] = NULL;
-		i++;
-	}
-	i = 0;
-	while (i < 10)
-	{
-		game->numbers[i] = NULL;
-		i++;
-	}
-}
-
 bool	sprite_load_all(t_game *game)
 {
 	size_t	i;
@@ -83,9 +59,9 @@ static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr)
 
 	if (sprite == FLOOR)
 		file = SPRITE_FLOOR;
-	else if (sprite == TOP_BOT)
+	else if (sprite == WALL_TOP_BOT)
 		file = SPRITE_TOP_BOT;
-	else if (sprite == LEFT_RIGHT)
+	else if (sprite == WALL_LEFT_RIGHT)
 		file = SPRITE_LEFT_RIGHT;
 	else if (sprite == WALL)
 		file = SPRITE_WALL;
@@ -107,33 +83,4 @@ static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr)
 	if(sprite != HUD_BACKGROUND && (width != SPRITE_SIZE || height != SPRITE_SIZE))
 		return (fprint_err(false, "Invalid sprite size", " '%s': width = %i x height = %i (expected %i x %i)", file, width, height, SPRITE_SIZE, SPRITE_SIZE), false);
 	return (true);
-}
-
-void	sprite_free_all(t_game *game)
-{
-	size_t	i;
-
-	if (!game->mlx_ptr)
-		return ;
-	i = 0;
-	while (i < SPRITE_COUNT)
-	{
-		if (game->sprites[i])
-			mlx_destroy_image(game->mlx_ptr, game->sprites[i]);
-		i++;
-	}
-	i = 0;
-	while (i < 26)
-	{
-		if (game->letters[i])
-			mlx_destroy_image(game->mlx_ptr, game->letters[i]);
-		i++;
-	}
-	i = 0;
-	while (i < 10)
-	{
-		if (game->numbers[i])
-			mlx_destroy_image(game->mlx_ptr, game->numbers[i]);
-		i++;
-	}
 }

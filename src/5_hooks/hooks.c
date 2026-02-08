@@ -1,11 +1,9 @@
-#include "libft.h"
 #include "so_long.h"
 #include "mlx.h"
 #include <stdlib.h>
 
-#define MIN_MS_BETWEEN_MOVES 50
-
 static void	move_player(t_game *game, int new_y, int new_x);
+static void	decrement_collectibles(t_game *game);
 
 int	handle_key_press(int event_data, void *param)
 {
@@ -33,31 +31,35 @@ int	handle_key_press(int event_data, void *param)
 	return (0);
 }
 
-static void	move_player(t_game *game, int new_y, int new_x)
+static void	move_player(t_game *game, int y, int x)
 {
-	if (game->map.grid[new_y][new_x] == '1')
+	int	cell;
+
+	cell = (int)game->map.grid[y][x];
+	if ((cell >= WALL_TOP_BOT && cell <= WALL) || cell == EXIT_CLOSE)
 		return ;
-	if (game->collectibles_count > 0 && game->map.grid[new_y][new_x] == 'E')
-		return ;
-	render_sprite(game, FLOOR, game->player.y, game->player.x);
-	game->player.y = new_y;
-	game->player.x = new_x;
-	render_sprite(game, PLAYER, new_y, new_x);
+	else if (cell == EXIT_OPEN)
+		game_win(game);
+	window_center(game, y, x);
+	if (cell == COLLEC)
+		decrement_collectibles(game);
+	game->map.grid[game->player.y][game->player.x] = FLOOR;
+	add_modified_cell(game, game->player.y, game->player.x);
+	game->map.grid[y][x] = PLAYER;
+	add_modified_cell(game, y, x);
+	game->player.y = y;
+	game->player.x = x;
 	game->moves_count++;
-	if (game->map.grid[game->player.y][game->player.x] == 'C')
-	{
-		game->map.grid[game->player.y][game->player.x] = '0';
-		game->collectibles_count--;
-		if (game->collectibles_count == 0)
-			render_sprite(game, EXIT_OPEN, game->exit.y, game->exit.x);
-	}
-	if (game->collectibles_count == 0 && game->map.grid[new_y][new_x] == 'E')
-		mlx_loop_end(game->mlx_ptr);
-	window_center(game);
-	if (game->window.moved)
-		render_all(game);
-	render_number(game, game->moves_count, HUD_Y_PADDING, HUD_X_PADDING + HUD_TITLE_LEN * LETTER_WIDTH);
-	ft_printf("Moves = %i\n", (int)game->moves_count);
+	render_hud_update(game);
+}
+
+static void	decrement_collectibles(t_game *game)
+{
+	game->collectibles_count--;
+	if (game->collectibles_count > 0)
+		return ;
+	game->map.grid[game->exit.y][game->exit.x] = EXIT_OPEN;
+	add_modified_cell(game, game->exit.y, game->exit.x);
 }
 
 int handle_window_close(void *param)

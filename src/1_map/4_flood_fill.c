@@ -60,11 +60,11 @@ static bool	flood_exec(t_flood *flood, t_game *game, int y, int x)
 		return (false);
 	flood->visited[y][x] = true;
 	cell = game->map.grid[y][x];
-	if (cell == '1')
+	if (cell == WALL_CELL)
 		return (false);
-	else if (cell == 'C')
+	else if (cell == COLLEC_CELL)
 		flood->collectibles++;
-	else if (cell == 'E')
+	else if (cell == EXIT_CELL)
 		flood->exit = true;
 	if (flood->collectibles == game->collectibles_count && flood->exit)
 		return (true);

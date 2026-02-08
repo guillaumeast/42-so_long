@@ -1,11 +1,11 @@
 # TODO
 
-- Mettre floor en fond de tous les sprites et arrêter de rendre floor partout + sprite => rendre uniquement sprites
 - Win screen
 - Animations
 - Ennemis
 - Niveaux bonus
 - check `.ber` (à la fin du fichier !)
+- Mettre floor en fond de tous les sprites et arrêter de rendre floor partout + sprite => rendre uniquement sprites
 - Installer funcheck (container + vm)
 
 # TESTS
