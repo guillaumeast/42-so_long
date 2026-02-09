@@ -3,8 +3,8 @@
 #include "so_long.h"
 #include <stdlib.h>
 
-static bool	sprite_load_letters(t_game *game);
-static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr);
+static inline bool	sprite_load_letters(t_game *game);
+static inline bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr);
 
 bool	sprite_load_all(t_game *game)
 {
@@ -19,9 +19,9 @@ bool	sprite_load_all(t_game *game)
 	return (true);
 }
 
-static bool	sprite_load_letters(t_game *game)
+static inline bool	sprite_load_letters(t_game *game)
 {
-	static char	path[19] = "sprites/font/X.xpm";
+	static char	path[SPRITE_HUD_PATH_LEN] = SPRITE_HUD_FONT;
 	int			width;
 	int			height;
 	int			i;
@@ -29,7 +29,7 @@ static bool	sprite_load_letters(t_game *game)
 	i = 0;
 	while (i < 26)
 	{
-		path[13] = (char)('A' + i);
+		path[SPRITE_HUD_IDX] = (char)('A' + i);
 		game->letters[i] = mlx_xpm_file_to_image(game->mlx_ptr, path, &width, &height);
 		if (!game->letters[i])
 			return (fprint_err(true, "Sprite loading failed", " %s", path), false);
@@ -40,7 +40,7 @@ static bool	sprite_load_letters(t_game *game)
 	i = 0;
 	while (i < 10)
 	{
-		path[13] = (char)('0' + i);
+		path[SPRITE_HUD_IDX] = (char)('0' + i);
 		game->numbers[i] = mlx_xpm_file_to_image(game->mlx_ptr, path, &width, &height);
 		if (!game->numbers[i])
 			return (fprint_err(true, "Sprite loading failed", " %s", path), false);
@@ -51,7 +51,7 @@ static bool	sprite_load_letters(t_game *game)
 	return (true);
 }
 
-static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr)
+static inline bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr)
 {
 	const char	*file;
 	int			width;
@@ -73,6 +73,12 @@ static bool	sprite_load(void **sprites, t_sprite sprite, void *mlx_ptr)
 		file = SPRITE_EXIT_OPEN;
 	else if (sprite == PLAYER)
 		file = SPRITE_PLAYER;
+	else if (sprite == PLAYER_COLLEC_1)
+		file = SPRITE_PLAYER_COLL_1;
+	else if (sprite == PLAYER_COLLEC_2)
+		file = SPRITE_PLAYER_COLL_2;
+	else if (sprite == PLAYER_COLLEC_3)
+		file = SPRITE_PLAYER_COLL_3;
 	else if (sprite == HUD_BACKGROUND)
 		file = SPRITE_HUD_BACKGROUND;
 	else

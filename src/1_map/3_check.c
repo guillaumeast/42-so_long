@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static bool	check_map(t_game *game);
-static bool	check_cell(t_game *game, int y, int x);
+static inline bool	check_map(t_game *game);
+static inline bool	check_cell(t_game *game, int y, int x);
 
 bool	map_check(t_game *game)
 {
@@ -58,7 +58,7 @@ bool	check_empty_lines(t_buff *buff)
 	return (true);
 }
 
-static bool	check_map(t_game *game)
+static inline bool	check_map(t_game *game)
 {
 	int	y;
 	int	x;
@@ -87,7 +87,7 @@ static bool	check_map(t_game *game)
 	return (true);
 }
 
-static bool	check_cell(t_game *game, int y, int x)
+static inline bool	check_cell(t_game *game, int y, int x)
 {
 	char	cell;
 

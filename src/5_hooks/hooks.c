@@ -2,8 +2,9 @@
 #include "mlx.h"
 #include <stdlib.h>
 
-static void	move_player(t_game *game, int new_y, int new_x);
-static void	decrement_collectibles(t_game *game);
+static inline void	move_player(t_game *game, int new_y, int new_x);
+static inline void	update_player_sprite(t_game *game, int y, int x);
+static inline void	decrement_collectibles(t_game *game);
 
 int	handle_key_press(int event_data, void *param)
 {
@@ -31,7 +32,7 @@ int	handle_key_press(int event_data, void *param)
 	return (0);
 }
 
-static void	move_player(t_game *game, int y, int x)
+static inline void	move_player(t_game *game, int y, int x)
 {
 	int	cell;
 
@@ -43,17 +44,33 @@ static void	move_player(t_game *game, int y, int x)
 	window_center(game, y, x);
 	if (cell == COLLEC)
 		decrement_collectibles(game);
-	game->map.grid[game->player.y][game->player.x] = FLOOR;
 	add_modified_cell(game, game->player.y, game->player.x);
-	game->map.grid[y][x] = PLAYER;
+	update_player_sprite(game, y, x);
 	add_modified_cell(game, y, x);
-	game->player.y = y;
-	game->player.x = x;
 	game->moves_count++;
 	render_hud_update(game);
 }
 
-static void	decrement_collectibles(t_game *game)
+static inline void	update_player_sprite(t_game *game, int y, int x)
+{
+	if (game->map.grid[y][x] == COLLEC)
+		game->map.grid[y][x] = PLAYER_COLLEC_2;
+	else if (game->map.grid[y + 1][x] == COLLEC
+		|| game->map.grid[y - 1][x] == COLLEC
+		|| game->map.grid[y][x + 1] == COLLEC
+		|| game->map.grid[y][x - 1] == COLLEC
+	)
+		game->map.grid[y][x] = PLAYER_COLLEC_1;
+	else if (game->map.grid[game->player.y][game->player.x] == PLAYER_COLLEC_2)
+		game->map.grid[y][x] = PLAYER_COLLEC_3;
+	else
+		game->map.grid[y][x] = PLAYER;
+	game->map.grid[game->player.y][game->player.x] = FLOOR;
+	game->player.y = y;
+	game->player.x = x;
+}
+
+static inline void	decrement_collectibles(t_game *game)
 {
 	game->collectibles_count--;
 	if (game->collectibles_count > 0)
@@ -62,7 +79,7 @@ static void	decrement_collectibles(t_game *game)
 	add_modified_cell(game, game->exit.y, game->exit.x);
 }
 
-int handle_window_close(void *param)
+int	handle_window_close(void *param)
 {
 	t_game	*game;
 

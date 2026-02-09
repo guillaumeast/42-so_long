@@ -1,7 +1,7 @@
 #include "so_long.h"
 #include "render_priv.h"
 
-static void	render_modified_cells(t_game *game);
+static inline void	render_modified_cells(t_game *game);
 
 int	render_frame(t_game *game)
 {
@@ -12,7 +12,7 @@ int	render_frame(t_game *game)
 	return (0);
 }
 
-static void	render_modified_cells(t_game *game)
+static inline void	render_modified_cells(t_game *game)
 {
 	size_t	i;
 

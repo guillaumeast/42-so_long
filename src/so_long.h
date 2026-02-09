@@ -21,16 +21,22 @@
 
 # define LETTER_HEIGHT			28
 # define LETTER_WIDTH			16
-# define SPRITE_SIZE			64
-# define SPRITE_FLOOR			"sprites/floor/floor.xpm"
-# define SPRITE_TOP_BOT			"sprites/wall/border_top_bot.xpm"
-# define SPRITE_LEFT_RIGHT		"sprites/wall/border_left_right.xpm"
-# define SPRITE_WALL			"sprites/wall/wall_dark_2.xpm"
-# define SPRITE_COLLEC			"sprites/collectible/collectible.xpm"
-# define SPRITE_EXIT_CLOSE		"sprites/exit/exit_close.xpm"
-# define SPRITE_EXIT_OPEN		"sprites/exit/exit_open.xpm"
-# define SPRITE_PLAYER			"sprites/player/player.xpm"
-# define SPRITE_HUD_BACKGROUND	"sprites/font/background.xpm"
+# define SPRITE_SIZE			128
+# define SPRITE_FLOOR			"sprites/v2/floor/floor.xpm"
+# define SPRITE_TOP_BOT			"sprites/v2/wall/wall_top_bot.xpm"
+# define SPRITE_LEFT_RIGHT		"sprites/v2/wall/wall_left_right.xpm"
+# define SPRITE_WALL			"sprites/v2/wall/wall.xpm"
+# define SPRITE_COLLEC			"sprites/v2/collectible/collectible.xpm"
+# define SPRITE_EXIT_CLOSE		"sprites/v2/exit/exit_close.xpm"
+# define SPRITE_EXIT_OPEN		"sprites/v2/exit/exit_open.xpm"
+# define SPRITE_PLAYER			"sprites/v2/player/player_idle.xpm"
+# define SPRITE_PLAYER_COLL_1	"sprites/v2/player/player_collec_1.xpm"
+# define SPRITE_PLAYER_COLL_2	"sprites/v2/player/player_collec_2.xpm"
+# define SPRITE_PLAYER_COLL_3	"sprites/v2/player/player_collec_3.xpm"
+# define SPRITE_HUD_BACKGROUND	"sprites/v2/font/background.xpm"
+# define SPRITE_HUD_FONT		"sprites/v2/font/_.xpm"
+# define SPRITE_HUD_PATH_LEN	22
+# define SPRITE_HUD_IDX			16
 
 # define MIN_MS_BETWEEN_MOVES	0
 # define KEY_PRESS				2
@@ -66,6 +72,9 @@ typedef enum e_sprite
 	EXIT_CLOSE,
 	EXIT_OPEN,
 	PLAYER,
+	PLAYER_COLLEC_1,
+	PLAYER_COLLEC_2,
+	PLAYER_COLLEC_3,
 	HUD_BACKGROUND,
 	SPRITE_COUNT
 }	t_sprite;

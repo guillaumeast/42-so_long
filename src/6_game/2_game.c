@@ -3,7 +3,7 @@
 #include "so_long.h"
 #include <stdlib.h>
 
-static bool	init_modified_cells(t_game *game);
+static inline bool	init_modified_cells(t_game *game);
 
 bool	game_launch(t_game *game)
 {
@@ -29,7 +29,7 @@ bool	game_launch(t_game *game)
 	return (true);
 }
 
-static bool	init_modified_cells(t_game *game)
+static inline bool	init_modified_cells(t_game *game)
 {
 	size_t	cells_count;
 

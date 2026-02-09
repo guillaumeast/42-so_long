@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static bool	flood_init(t_flood *flood, t_map *map);
-static bool	flood_exec(t_flood *flood, t_game *game, int y, int x);
-static void	flood_free(t_flood *flood);
+static inline bool	flood_init(t_flood *flood, t_map *map);
+static bool			flood_exec(t_flood *flood, t_game *game, int y, int x);
+static inline void	flood_free(t_flood *flood);
 
 bool	map_has_valid_path(t_game *game)
 {
@@ -26,7 +26,7 @@ bool	map_has_valid_path(t_game *game)
 	return (true);
 }
 
-static bool	flood_init(t_flood *flood, t_map *map)
+static inline bool	flood_init(t_flood *flood, t_map *map)
 {
 	int	y;
 
@@ -75,7 +75,7 @@ static bool	flood_exec(t_flood *flood, t_game *game, int y, int x)
 	return (false);
 }
 
-static void	flood_free(t_flood *flood)
+static inline void	flood_free(t_flood *flood)
 {
 	size_t	y;
 

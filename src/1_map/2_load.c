@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static bool	read_map(t_buff *buff, char *map_path);
-static void	normalize_map(t_game *game);
-static void	normalize_cell(t_game *game, int x, int y);
+static inline bool	read_map(t_buff *buff, char *map_path);
+static inline void	normalize_map(t_game *game);
+static inline void	normalize_cell(t_game *game, int x, int y);
 
 bool	map_load(t_game *game, char *map_path)
 {
@@ -34,7 +34,7 @@ bool	map_load(t_game *game, char *map_path)
 	return (true);
 }
 
-static bool	read_map(t_buff *buff, char *map_path)
+static inline bool	read_map(t_buff *buff, char *map_path)
 {
 	int	map_fd;
 
@@ -55,7 +55,7 @@ static bool	read_map(t_buff *buff, char *map_path)
 	return (true);
 }
 
-static void	normalize_map(t_game *game)
+static inline void	normalize_map(t_game *game)
 {
 	int	y;
 	int	x;
@@ -73,7 +73,7 @@ static void	normalize_map(t_game *game)
 	}
 }
 
-static void	normalize_cell(t_game *game, int x, int y)
+static inline void	normalize_cell(t_game *game, int x, int y)
 {
 	char	cell;
 
