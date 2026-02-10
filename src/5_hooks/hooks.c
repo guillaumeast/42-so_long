@@ -37,7 +37,7 @@ static inline void	move_player(t_game *game, int y, int x)
 	int	cell;
 
 	cell = (int)game->map.grid[y][x];
-	if ((cell >= WALL_TOP_BOT && cell <= WALL) || cell == EXIT_CLOSE)
+	if (cell <= WALL || cell == EXIT_CLOSE)
 		return ;
 	else if (cell == EXIT_OPEN)
 		game_win(game);

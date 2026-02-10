@@ -1,3 +1,11 @@
+# HUD
+
+- head							= h128 x w135
+- text							= h128 x w500	=> Font = Palatino (size 90)
+- moves + collec_count + lifes	= h128 x w135
+- Total							= h128 x w800	=> spaces between cols = w15
+- ⚠️ Forcer la fenêtre à toujours faire au moins w830!
+
 # REQUIRED
 
 - [OK] **PLAYER**			⇢ Xavier en tenue de prisonnier (orange car cliché et visible)

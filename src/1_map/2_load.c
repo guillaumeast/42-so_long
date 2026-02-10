@@ -7,6 +7,7 @@
 static inline bool	read_map(t_buff *buff, char *map_path);
 static inline void	normalize_map(t_game *game);
 static inline void	normalize_cell(t_game *game, int x, int y);
+static inline void	normalize_wall(t_game *game, int x, int y, char cell);
 
 bool	map_load(t_game *game, char *map_path)
 {
@@ -86,13 +87,26 @@ static inline void	normalize_cell(t_game *game, int x, int y)
 		game->map.grid[y][x] = EXIT_CLOSE;
 	else if (cell == PLAYER_CELL)
 		game->map.grid[y][x] = PLAYER;
+	else
+		normalize_wall(game, x, y, cell);
+}
+
+static inline void	normalize_wall(t_game *game, int x, int y, char cell)
+{
+	if (cell == WALL_CELL && x == 0 && y != game->map.height - 1)
+		game->map.grid[y][x] = WALL_LEFT;
+	else if (cell == WALL_CELL && x == 0 && y == game->map.height - 1)
+		game->map.grid[y][x] = WALL_BOT_LEFT;
+	else if (cell == WALL_CELL && x == game->map.width - 1 && y != game->map.height - 1)
+		game->map.grid[y][x] = WALL_RIGHT;
+	else if (cell == WALL_CELL && x == game->map.width - 1 && y == game->map.height - 1)
+		game->map.grid[y][x] = WALL_BOT_RIGHT;
+	else if (cell == WALL_CELL && y == 0 && x == 1)
+		game->map.grid[y][x] = WALL_TOP_LEFT;
+	else if (cell == WALL_CELL && y == 0 && x == game->map.width - 2)
+		game->map.grid[y][x] = WALL_TOP_RIGHT;
+	else if (cell == WALL_CELL && (y == 0 || y == game->map.height - 1))
+		game->map.grid[y][x] = WALL_TOP_BOT;
 	else if (cell == WALL_CELL)
-	{
-		if (y == 0 || y == game->map.height - 1)
-			game->map.grid[y][x] = WALL_TOP_BOT;
-		else if (x == 0 || x == game->map.width - 1)
-			game->map.grid[y][x] = WALL_LEFT_RIGHT;
-		else
-			game->map.grid[y][x] = WALL;
-	}
+		game->map.grid[y][x] = WALL;
 }

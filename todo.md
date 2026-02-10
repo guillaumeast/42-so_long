@@ -21,6 +21,10 @@
 - Mettre floor en fond de tous les sprites et arrêter de rendre floor partout + sprite => rendre uniquement sprites
 - Installer [**funcheck**](https://github.com/froz42/funcheck?tab=readme-ov-file#quick-install) (container + vm)
 
+# QUESTIONS
+
+- Makefile doit compiler la mlx et la clean ??
+
 # TESTS
 
 - Add missing wall at top / bot / left /right

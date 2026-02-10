@@ -20,12 +20,10 @@ bool	game_launch(t_game *game)
 		return (print_err(true, "mlx_hook() failed"), false);
 	if (!mlx_hook(game->mlx_win, WINDOW_CLOSE, 0, handle_window_close, game))
 		return (print_err(true, "mlx_hook() failed"), false);
-	if (mlx_loop_hook(game->mlx_ptr, render_frame, game))
-		return (print_err(true, "mlx_loop_hook() failed"), false);
+	mlx_loop_hook(game->mlx_ptr, render_frame, game);
 	render_hud_init(game);
 	game->window.moved = true;
-	if (!mlx_loop(game->mlx_ptr))
-		return (print_err(true, "mlx_loop() failed"), false);
+	mlx_loop(game->mlx_ptr);
 	return (true);
 }
 

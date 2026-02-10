@@ -1,8 +1,14 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+#include <stdio.h>
+
 # include <stdbool.h>
 # include <stddef.h>
+
+/* ************************************************************************* */
+/*                                   MAP                                     */
+/* ************************************************************************* */
 
 # define FLOOR_CELL				'0'
 # define WALL_CELL				'1'
@@ -10,35 +16,17 @@
 # define PLAYER_CELL			'P'
 # define EXIT_CELL				'E'
 
+/* ************************************************************************* */
+/*                                  WINDOW                                   */
+/* ************************************************************************* */
+
 # define WINDOW_PAD				100
 # define PLAYER_PAD				2
 
-# define HUD_HEIGHT				32
-# define HUD_TITLE				"DAYS IN JAIL"
-# define HUD_TITLE_LEN			13
-# define HUD_Y_PAD				2
-# define HUD_X_PAD				2
+/* ************************************************************************* */
+/*                                  EVENTS                                   */
+/* ************************************************************************* */
 
-# define LETTER_HEIGHT			28
-# define LETTER_WIDTH			16
-# define SPRITE_SIZE			128
-# define SPRITE_FLOOR			"sprites/v2/floor/floor.xpm"
-# define SPRITE_TOP_BOT			"sprites/v2/wall/wall_top_bot.xpm"
-# define SPRITE_LEFT_RIGHT		"sprites/v2/wall/wall_left_right.xpm"
-# define SPRITE_WALL			"sprites/v2/wall/wall.xpm"
-# define SPRITE_COLLEC			"sprites/v2/collectible/collectible.xpm"
-# define SPRITE_EXIT_CLOSE		"sprites/v2/exit/exit_close.xpm"
-# define SPRITE_EXIT_OPEN		"sprites/v2/exit/exit_open.xpm"
-# define SPRITE_PLAYER			"sprites/v2/player/player_idle.xpm"
-# define SPRITE_PLAYER_COLL_1	"sprites/v2/player/player_collec_1.xpm"
-# define SPRITE_PLAYER_COLL_2	"sprites/v2/player/player_collec_2.xpm"
-# define SPRITE_PLAYER_COLL_3	"sprites/v2/player/player_collec_3.xpm"
-# define SPRITE_HUD_BACKGROUND	"sprites/v2/font/background.xpm"
-# define SPRITE_HUD_FONT		"sprites/v2/font/_.xpm"
-# define SPRITE_HUD_PATH_LEN	22
-# define SPRITE_HUD_IDX			16
-
-# define MIN_MS_BETWEEN_MOVES	0
 # define KEY_PRESS				2
 # define KEY_PRESS_MASK			1
 # define WINDOW_CLOSE			17
@@ -62,12 +50,53 @@ int	mlx_destroy_display(void *mlx_ptr);
 #  define KEY_ESC				65307
 # endif
 
+/* ************************************************************************* */
+/*                                    HUD                                    */
+/* ************************************************************************* */
+
+# define HUD_HEIGHT				32
+# define HUD_TITLE				"DAYS IN JAIL"
+# define HUD_TITLE_LEN			13
+# define HUD_Y_PAD				2
+# define HUD_X_PAD				2
+# define HUD_FONT_HEIGHT		28
+# define HUD_FONT_WIDTH			16
+# define SPRITE_HUD_FONT		"sprites/font/_.xpm"
+# define SPRITE_HUD_IDX			13
+
+/* ************************************************************************* */
+/*                                  SPRITES                                  */
+/* ************************************************************************* */
+
+# define SPRITE_SIZE			64
+# define SPRITE_WALL_TOP_LEFT	"sprites/v3/wall/outer/wall_top_left_64.xpm"
+# define SPRITE_WALL_TOP_BOT	"sprites/v3/wall/outer/wall_top_bot_64.xpm"
+# define SPRITE_WALL_TOP_RIGHT	"sprites/v3/wall/outer/wall_top_right_64.xpm"
+# define SPRITE_WALL_LEFT		"sprites/v3/wall/outer/wall_left_64.xpm"
+# define SPRITE_WALL_RIGHT		"sprites/v3/wall/outer/wall_right_64.xpm"
+# define SPRITE_WALL_BOT_LEFT	"sprites/v3/wall/outer/wall_bot_left_64.xpm"
+# define SPRITE_WALL_BOT_RIGHT	"sprites/v3/wall/outer/wall_bot_right_64.xpm"
+# define SPRITE_WALL			"sprites/v2/wall/wall_64.xpm"
+# define SPRITE_FLOOR			"sprites/v2/floor/floor_64.xpm"
+# define SPRITE_COLLEC			"sprites/v2/collectible/collectible_64.xpm"
+# define SPRITE_EXIT_CLOSE		"sprites/v2/exit/exit_close_64.xpm"
+# define SPRITE_EXIT_OPEN		"sprites/v2/exit/exit_open_64.xpm"
+# define SPRITE_PLAYER			"sprites/v2/player/player_idle_64.xpm"
+# define SPRITE_PLAYER_COLL_1	"sprites/v2/player/player_collec_1_64.xpm"
+# define SPRITE_PLAYER_COLL_2	"sprites/v2/player/player_collec_2_64.xpm"
+# define SPRITE_PLAYER_COLL_3	"sprites/v2/player/player_collec_3_64.xpm"
+
 typedef enum e_sprite
 {
-	FLOOR,
+	WALL_TOP_LEFT,
 	WALL_TOP_BOT,
-	WALL_LEFT_RIGHT,
+	WALL_TOP_RIGHT,
+	WALL_LEFT,
+	WALL_RIGHT,
+	WALL_BOT_LEFT,
+	WALL_BOT_RIGHT,
 	WALL,
+	FLOOR,
 	COLLEC,
 	EXIT_CLOSE,
 	EXIT_OPEN,
@@ -75,9 +104,18 @@ typedef enum e_sprite
 	PLAYER_COLLEC_1,
 	PLAYER_COLLEC_2,
 	PLAYER_COLLEC_3,
-	HUD_BACKGROUND,
 	SPRITE_COUNT
 }	t_sprite;
+
+/* ************************************************************************* */
+/*                                ANIMATIONS                                 */
+/* ************************************************************************* */
+
+# define MIN_MS_BETWEEN_MOVES	0
+
+/* ************************************************************************* */
+/*                                  STRUCTS                                  */
+/* ************************************************************************* */
 
 typedef struct s_cell
 {

@@ -19,12 +19,12 @@ void	render_string(t_game *game, const char *string, int x)
 		if (string[i] >= 'A' && string[i] <= 'Z')
 		{
 			index = string[i] - 'A';
-			render_image(game, chars[index], x + LETTER_WIDTH * i, HUD_Y_PAD);
+			render_image(game, chars[index], x + HUD_FONT_WIDTH * i, HUD_Y_PAD);
 		}
 		if (string[i] >= '0' && string[i] <= '9')
 		{
 			index = string[i] - '0';
-			render_image(game, nums[index], x + LETTER_WIDTH * i, HUD_Y_PAD);
+			render_image(game, nums[index], x + HUD_FONT_WIDTH * i, HUD_Y_PAD);
 		}
 		i++;
 	}
@@ -40,7 +40,7 @@ static int	render_number_rec(t_game *game, size_t number, int y, int x)
 	if (number >= 10)
 		x = render_number_rec(game, number / 10, y, x);
 	render_image(game, game->numbers[number % 10], x, y);
-	return (x + LETTER_WIDTH);
+	return (x + HUD_FONT_WIDTH);
 }
 
 void	render_image(t_game *game, void *image, int x, int y)
