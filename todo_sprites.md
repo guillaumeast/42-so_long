@@ -3,8 +3,8 @@
 - head							= h128 x w135
 - text							= h128 x w500	=> Font = Palatino (size 90)
 - moves + collec_count + lifes	= h128 x w135
-- Total							= h128 x w800	=> spaces between cols = w15
-- ⚠️ Forcer la fenêtre à toujours faire au moins w830!
+- Total							= h128 x w800	=> spaces between cols = w16
+- ⚠️ Forcer la fenêtre à toujours faire au moins (16 + 128 + 16 =) h160 x (16 + 135 + 16 + 500 + 16 + 135 + 16 = ) w834!
 
 # REQUIRED
 

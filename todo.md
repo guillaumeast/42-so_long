@@ -1,5 +1,12 @@
 # TODO
 
+- Floor				=> random
+- Walls (alone)		=> random
+- Walls	(multiple)	=> barrels
+- Collectibles		=> ???
+- Exit				=> ???
+- Player			=> ???
+
 1. Chercher un pack de sprites de joueur avec **idle**, **move**, **cac**, **distance**
 2. Regrouper tous les sprites dont je vais avoir besoin dans un dossier :
 	- `sprites/`

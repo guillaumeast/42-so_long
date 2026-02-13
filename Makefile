@@ -19,7 +19,7 @@ ifeq ($(UNAME_S),Darwin)
 else ifeq ($(UNAME_S),Linux)
 	MLX_DIR		:= mlx-linux
 	MLX_LIBS	:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
-	SRCS		:= $(wildcard logs/*.c) src/main.c src/time.c $(wildcard src/*/*.c)
+	SRCS		:= $(wildcard logs/*.c) src/main.c src/utils.c $(wildcard src/*/*.c)
 else
 	$(error Unsupported OS)
 endif
@@ -36,8 +36,8 @@ INCLUDES		:= \
 	-I$(MLX_DIR) \
 	-Ilogs \
 	-Isrc \
-	-Isrc/1_map \
-	-Isrc/2_sprites \
+	-Isrc/1_sprites \
+	-Isrc/2_map \
 	-Isrc/3_window \
 	-Isrc/4_render \
 	-Isrc/5_hooks \

@@ -11,10 +11,7 @@ int	main(int argc, char **argv)
 		fprint_err(false, "Usage", "%s <map.ber>", argv[0]);
 		return (EXIT_FAILURE);
 	}
-	game_init(&game);
-	if (!map_load(&game, argv[1]))
-		return (game_free(&game), EXIT_FAILURE);
-	if (!game_launch(&game))
+	if (!game_launch(&game, argv[1]))
 		return (game_free(&game), EXIT_FAILURE);
 	game_free(&game);
 	return (EXIT_SUCCESS);
