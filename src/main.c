@@ -1,18 +1,33 @@
+#include "mlx.h"
+#include "apple.h"
 #include "libft.h"
-#include "so_long.h"
-#include <stdlib.h>
+#include "view.h"
 
-int	main(int argc, char **argv)
+# include "logs.h"
+
+int	main(void)
 {
-	t_game		game;
+	void	*mlx_ptr;
+	t_view	view;
 
-	if (argc != 2)
+	print_start(99, "main()");
+	mlx_ptr = mlx_init();
+	if (!mlx_ptr)
+		return (print_err(true, "Mlx init failed"), 1);
+	view_init(&view);
+	if (!view_load(mlx_ptr, &view))
 	{
-		fprint_err(false, "Usage", "%s <map.ber>", argv[0]);
-		return (EXIT_FAILURE);
+		view_free(mlx_ptr, &view);
+		mlx_destroy_display(mlx_ptr);
+		return (1);
 	}
-	if (!game_launch(&game, argv[1]))
-		return (game_free(&game), EXIT_FAILURE);
-	game_free(&game);
-	return (EXIT_SUCCESS);
+	if (!view_launch(mlx_ptr, &view))
+	{
+		view_free(mlx_ptr, &view);
+		mlx_destroy_display(mlx_ptr);
+		return (1);
+	}
+	view_free(mlx_ptr, &view);
+	mlx_destroy_display(mlx_ptr);
+	return (0);
 }

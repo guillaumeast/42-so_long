@@ -7,12 +7,21 @@
 		"-I${workspaceFolder}/mlx-mac",
 		"-I${workspaceFolder}/mlx-linux",
 		"-I${workspaceFolder}/src",
-		"-I${workspaceFolder}/src/1_sprites",
-		"-I${workspaceFolder}/src/2_map",
-		"-I${workspaceFolder}/src/3_window",
-		"-I${workspaceFolder}/src/4_render",
-		"-I${workspaceFolder}/src/5_hooks",
-		"-I${workspaceFolder}/src/6_game",
-		"-I${workspaceFolder}/src/hud"
+		"-I${workspaceFolder}/src/1_view",
+		"-I${workspaceFolder}/src/1_view/apple",
+		"-I${workspaceFolder}/src/1_view/0_fps",
+		"-I${workspaceFolder}/src/1_view/1_sprite_set",
+		"-I${workspaceFolder}/src/1_view/2_position",
+		"-I${workspaceFolder}/src/1_view/3_size",
+		"-I${workspaceFolder}/src/1_view/4_texture",
+		"-I${workspaceFolder}/src/1_view/5_object",
+		"-I${workspaceFolder}/src_old",
+		"-I${workspaceFolder}/src_old/1_sprites",
+		"-I${workspaceFolder}/src_old/2_map",
+		"-I${workspaceFolder}/src_old/3_window",
+		"-I${workspaceFolder}/src_old/4_render",
+		"-I${workspaceFolder}/src_old/5_hooks",
+		"-I${workspaceFolder}/src_old/6_game",
+		"-I${workspaceFolder}/src_old/hud"
 	]
 }

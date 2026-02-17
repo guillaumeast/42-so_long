@@ -1,5 +1,16 @@
 # TODO
 
+- Paupière qui s'ouvre et ferme au changement de gif
+- Bouche animée
+
+🎬 **INTRO**
+1. Trésor: cropped (détails, billets, pièces, entreprises Xav ??)
+**===> [unzoom] ===>** (tas d'or etc vu du dessus)
+2. Trésor au centre avec exit_open autourAjouter cadre porte ouverte
+**===> [unzoom] ===>**
+3. 
+
+**AUTRES**
 - Floor				=> random
 - Walls (alone)		=> random
 - Walls	(multiple)	=> barrels

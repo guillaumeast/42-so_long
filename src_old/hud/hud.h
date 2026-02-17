@@ -1,0 +1,16 @@
+#ifndef HUD_H
+# define HUD_H
+
+/* --- HUD_BACKGROUND --- */
+
+# define HUD_BACKGROUND_HEIGHT_PX	917
+# define HUD_BACKGROUND_WIDTH_PX	1529
+
+/* --- HUD_LOADING --- */
+
+# define HUD_LOADING_OFSSET_Y_PX	818
+# define HUD_LOADING_OFSSET_X_PX	0
+# define HUD_LOADING_HEIGHT_PX		11
+# define HUD_LOADING_WIDTH_PX		1250
+
+#endif

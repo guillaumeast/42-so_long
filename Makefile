@@ -15,16 +15,16 @@ UNAME_S			:= $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	MLX_DIR		:= mlx-mac
 	MLX_LIBS	:= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-	SRCS		:= $(wildcard logs/*.c) $(wildcard src/*.c) $(wildcard src/*/*.c)
 else ifeq ($(UNAME_S),Linux)
 	MLX_DIR		:= mlx-linux
 	MLX_LIBS	:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
-	SRCS		:= $(wildcard logs/*.c) src/main.c src/utils.c $(wildcard src/*/*.c)
 else
 	$(error Unsupported OS)
 endif
 
 # ================== SOURCES ================== #
+
+SRCS			:= $(wildcard logs/*.c) $(wildcard src/*.c) $(wildcard src/*/*.c) $(wildcard src/*/*/*.c)
 
 LIBFT_DIR		:= libft
 LIBFT			:= $(LIBFT_DIR)/libft.a
@@ -36,12 +36,14 @@ INCLUDES		:= \
 	-I$(MLX_DIR) \
 	-Ilogs \
 	-Isrc \
-	-Isrc/1_sprites \
-	-Isrc/2_map \
-	-Isrc/3_window \
-	-Isrc/4_render \
-	-Isrc/5_hooks \
-	-Isrc/6_game
+	-Isrc/1_view \
+	-Isrc/1_view/0_fps \
+	-Isrc/1_view/1_sprite_set \
+	-Isrc/1_view/2_position \
+	-Isrc/1_view/3_size \
+	-Isrc/1_view/4_texture \
+	-Isrc/1_view/5_object \
+	-Isrc/1_view/apple
 
 OBJ_DIR			:= obj
 OBJS			:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
