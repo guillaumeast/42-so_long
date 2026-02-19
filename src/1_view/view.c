@@ -2,109 +2,79 @@
 #include "libft.h"
 #include "apple.h"
 #include "mlx.h"
+#include <stdlib.h>
 
-# include <stdio.h>
 # include "logs.h"
-# include "fps.h"
-void	load_objects(t_view *view);
-int	render(t_tmp *tmp);
 
-void	view_init(t_view *view)
+#define VIEW_INITIAL_QUEUE_CAP 128
+
+t_view	view_init(void)
 {
-	view->mlx_win = NULL;
-	sprite_set_init_all(&view->sprite_sets);
+	return ((t_view)
+		{
+			.mlx_win = NULL,
+			.height = 0,
+			.width = 0,
+			.time.ms = 0,
+			.time.frames = 0,
+			.time.fps = 0,
+			.sprite_sets = sprite_set_init(),
+			.queue = NULL,
+			.queue_len = 0,
+			.queue_cap = 0
+		});
 }
 
 bool	view_load(void *mlx_ptr, t_view *view)
 {
-	if (!sprite_set_load_all(mlx_ptr, &view->sprite_sets))
+	char	*title;
+
+	print_title("view_load()");
+	if (!sprite_set_load(mlx_ptr))
 		return (false);
-	load_objects(view);	// TMP
-	return (true);
-}
-
-bool	view_launch(void *mlx_ptr, t_view *view)
-{
-	int	display_height;
-	int	display_width;
-	t_tmp	tmp;
-
-	mlx_get_screen_size(mlx_ptr, &display_width, &display_height);
-	if (display_height < 0 || display_width < 0)
+	view->queue = malloc(VIEW_INITIAL_QUEUE_CAP * sizeof * view->queue);
+	if (!view->queue)
+		return (false);
+	print_pass("queue malloc'd\n");
+	view->queue_cap = VIEW_INITIAL_QUEUE_CAP;
+	mlx_get_screen_size(mlx_ptr, &view->width, &view->height);
+	if (view->height < 0 || view->width < 0)
 	{
-		print_err(false, "mlx_get_screen_size() returned negative values");
+		print_err(true, "mlx_get_screen_size() failed");
 		return (false);
 	}
-	// if (display_height < WINDOW_MIN_HEIGHT || display_width < WINDOW_MIN_WIDTH)
+	// if (view->height < WINDOW_MIN_HEIGHT || view->width < WINDOW_MIN_WIDTH)
 	// {
 	// 	fprint_err(false,
 	// 		"screen is too small",
 	// 		" => height: %i (min: %i) | width: %i (min: %i))",
-	// 		display_height, WINDOW_MIN_HEIGHT, display_width, WINDOW_MIN_WIDTH);
+	// 		view->height, WINDOW_MIN_HEIGHT, view->width, WINDOW_MIN_WIDTH);
 	// 	return (false);
 	// }
-	tmp.mlx_ptr = mlx_ptr;
-	tmp.view = *view;
-	tmp.view.mlx_win = mlx_new_window(
+	print_pass("screen size captures\n");
+	title = str_dup(WINDOW_TITLE);
+	if (!title)
+		return (false);
+	view->width = WINDOW_MIN_WIDTH;
+	view->height = WINDOW_MIN_HEIGHT;
+	view->mlx_win = mlx_new_window(
 		mlx_ptr,
 		WINDOW_MIN_WIDTH,
 		WINDOW_MIN_HEIGHT,
-		(char *)WINDOW_TITLE
+		title
 	);
-	if (!tmp.view.mlx_win)
+	free(title);
+	if (!view->mlx_win)
 		return (print_err(true, "mlx_new_window() failed"), false);
-	mlx_loop_hook(mlx_ptr, render, &tmp);
-	mlx_loop(mlx_ptr);
+	print_result("view loaded");
 	return (true);
 }
 
 void	view_free(void *mlx_ptr, t_view *view)
 {
-	if (!mlx_ptr)
-		return ;
-	sprite_set_free_all(mlx_ptr, &view->sprite_sets);
-}
-
-/* --- TMP --- */
-
-void	load_objects(t_view *view)
-{
-	view->objects[OBJECT_HUD_BACKGROUND] = object_new(
-		OBJECT_HUD_BACKGROUND,
-		position_new_static(0, 0),
-		size_new_static(
-			SPRITE_SET_HUD_BACKGROUND_HEIGHT_PX,
-			SPRITE_SET_HUD_BACKGROUND_WIDTH_PX),
-		texture_new_static(
-			view->sprite_sets[SPRITE_SET_HUD_BACKGROUND]
-			.images[SPRITE_HUD_BACKGROUND]));
-	view->objects[OBJECT_HUD_LOADING] = object_new(
-		OBJECT_HUD_LOADING,
-		position_new_static(819, 0),
-		size_new_dynamic(
-			SPRITE_SET_HUD_LOADING_HEIGHT_PX,
-			SPRITE_SET_HUD_LOADING_WIDTH_PX, -1, 3000),
-		texture_new_static(view->sprite_sets[SPRITE_SET_HUD_LOADING].images[SPRITE_HUD_LOADING_1]));
-	// view->objects[OBJECT_HUD_LOADING] = object_new(
-	// 	OBJECT_HUD_LOADING,
-	// 	position_new_static(819, 0),
-	// 	size_new_static(
-	// 		SPRITE_SET_HUD_LOADING_HEIGHT_PX,
-	// 		SPRITE_SET_HUD_LOADING_WIDTH_PX),
-	// 	texture_new_dynamic(view->sprite_sets[SPRITE_SET_HUD_LOADING], 500));
-}
-
-int	render(t_tmp *tmp)
-{
-	size_t	i;
-
-	if (!fps_should_render())
-		return (0);
-	i = 0;
-	while (i < OBJECT_COUNT)
-	{
-		object_render(tmp->mlx_ptr, tmp->view.mlx_win, &tmp->view.objects[i]);
-		i++;
-	}
-	return (0);
+	if (mlx_ptr)
+		sprite_set_free(mlx_ptr);
+	if (view->queue)
+		free(view->queue);
+	*view = view_init();
 }

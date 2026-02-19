@@ -24,7 +24,7 @@ endif
 
 # ================== SOURCES ================== #
 
-SRCS			:= $(wildcard logs/*.c) $(wildcard src/*.c) $(wildcard src/*/*.c) $(wildcard src/*/*/*.c)
+SRCS			:= $(wildcard logs/*.c) $(wildcard src/*.c) $(wildcard src/*/*.c) $(wildcard src/*/*/*.c) $(wildcard src/*/*/*/*.c)
 
 LIBFT_DIR		:= libft
 LIBFT			:= $(LIBFT_DIR)/libft.a
@@ -36,14 +36,18 @@ INCLUDES		:= \
 	-I$(MLX_DIR) \
 	-Ilogs \
 	-Isrc \
+	-Isrc/0_model \
 	-Isrc/1_view \
 	-Isrc/1_view/0_fps \
-	-Isrc/1_view/1_sprite_set \
-	-Isrc/1_view/2_position \
-	-Isrc/1_view/3_size \
-	-Isrc/1_view/4_texture \
-	-Isrc/1_view/5_object \
-	-Isrc/1_view/apple
+	-Isrc/1_view/1_position \
+	-Isrc/1_view/2_sprite_set \
+	-Isrc/1_view/3_texture \
+	-Isrc/1_view/4_object \
+	-Isrc/1_view/0_apple \
+	-Isrc/2_controller \
+	-Isrc/3_components \
+	-Isrc/3_components/1_hud \
+	-Isrc/3_components/1_hud/objects \
 
 OBJ_DIR			:= obj
 OBJS			:= $(SRCS:%.c=$(OBJ_DIR)/%.o)

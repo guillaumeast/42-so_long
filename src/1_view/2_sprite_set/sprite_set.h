@@ -16,6 +16,7 @@ typedef enum	e_sprite_set_id
 {
 	SPRITE_SET_HUD_BACKGROUND,	// A
 	SPRITE_SET_HUD_LOADING,		// B
+	SPRITE_SET_XAV,				// C
 	SPRITE_SET_COUNT
 }	t_sprite_set_id;
 
@@ -34,9 +35,12 @@ typedef struct s_sprite_set
 /*                                  PROTOS                                   */
 /* ************************************************************************* */
 
-void	sprite_set_init_all(t_sprite_set (*sprite_sets)[SPRITE_SET_COUNT]);
-bool	sprite_set_load_all(void *mlx_ptr, t_sprite_set (*sprite_sets)[SPRITE_SET_COUNT]);
-void	sprite_set_free_all(void *mlx_ptr, t_sprite_set (*sprite_sets)[SPRITE_SET_COUNT]);
+t_sprite_set	*sprite_set_init(void);
+bool			sprite_set_load(void *mlx_ptr);
+void			sprite_set_free(void *mlx_ptr);
+
+t_sprite_set	sprite_set_get(t_sprite_set_id sprite_set_id);
+t_image			sprite_set_get_image(t_sprite_set_id sprite_set_id, size_t image_id);
 
 /* ************************************************************************* */
 /*                                   MODEL                                   */
@@ -67,7 +71,7 @@ typedef enum e_sprite_x
 
 typedef enum e_sprite_hud_bg
 {
-	SPRITE_HUD_BACKGROUND,
+	SPRITE_HUD_BACKGROUND,	// sprites/A/A
 	SPRITE_HUD_BACKGROUND_COUNT
 }	t_sprite_hud_bg;
 
@@ -80,17 +84,34 @@ typedef enum e_sprite_hud_bg
 
 typedef enum e_sprite_hud_load
 {
-	SPRITE_HUD_LOADING_1,
-	SPRITE_HUD_LOADING_2,
-	SPRITE_HUD_LOADING_3,
-	SPRITE_HUD_LOADING_4,
-	SPRITE_HUD_LOADING_5,
-	SPRITE_HUD_LOADING_6,
-	SPRITE_HUD_LOADING_7,
-	SPRITE_HUD_LOADING_8,
-	SPRITE_HUD_LOADING_9,
-	// SPRITE_HUD_LOADING_0,
+	SPRITE_HUD_LOADING_1,	// sprites/B/A
+	SPRITE_HUD_LOADING_2,	// sprites/B/B
+	SPRITE_HUD_LOADING_3,	// sprites/B/C
+	SPRITE_HUD_LOADING_4,	// sprites/B/D
+	SPRITE_HUD_LOADING_5,	// sprites/B/E
+	SPRITE_HUD_LOADING_6,	// sprites/B/F
+	SPRITE_HUD_LOADING_7,	// sprites/B/G
+	SPRITE_HUD_LOADING_8,	// sprites/B/H
+	SPRITE_HUD_LOADING_9,	// sprites/B/I
+	SPRITE_HUD_LOADING_0,	// sprites/B/J
 	SPRITE_HUD_LOADING_COUNT
 }	t_sprite_hud_load;
+
+/* ************************************************************************* */
+/*                               SPRITE_SET_XAV                              */
+/* ************************************************************************* */
+
+# define SPRITE_SET_XAV_FULL_HEIGHT_PX		100
+# define SPRITE_SET_XAV_FULL_WIDTH_PX		100
+
+typedef enum e_sprite_hud_xav
+{
+	SPRITE_XAV_DEFAULT,		// sprites/C/A
+	SPRITE_XAV_OH,			// sprites/C/B
+	SPRITE_XAV_YOU,			// sprites/C/C
+	SPRITE_XAV_GREEDY,		// sprites/C/D
+	SPRITE_XAV_NO,			// sprites/C/E
+	SPRITE_XAV_COUNT
+}	t_sprite_hud_xav;
 
 #endif
