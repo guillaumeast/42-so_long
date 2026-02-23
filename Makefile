@@ -36,18 +36,16 @@ INCLUDES		:= \
 	-I$(MLX_DIR) \
 	-Ilogs \
 	-Isrc \
-	-Isrc/0_model \
-	-Isrc/1_view \
-	-Isrc/1_view/0_fps \
-	-Isrc/1_view/1_position \
-	-Isrc/1_view/2_sprite_set \
-	-Isrc/1_view/3_texture \
-	-Isrc/1_view/4_object \
-	-Isrc/1_view/0_apple \
-	-Isrc/2_controller \
-	-Isrc/3_components \
-	-Isrc/3_components/1_hud \
-	-Isrc/3_components/1_hud/objects \
+	-Isrc/0_clock \
+	-Isrc/0_my_mlx \
+	-Isrc/1_model \
+	-Isrc/2_view \
+	-Isrc/2_view/1_mlx \
+	-Isrc/2_view/2_skin \
+	-Isrc/2_view/3_element \
+	-Isrc/2_view/4_render \
+	-Isrc/3_controller \
+	-Isrc/4_components
 
 OBJ_DIR			:= obj
 OBJS			:= $(SRCS:%.c=$(OBJ_DIR)/%.o)

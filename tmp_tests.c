@@ -4,74 +4,18 @@
 # include <stddef.h>
 
 /* ************************************************************************* */
-/*                                   VIEW                                    */
+/*                                  CLOCK                                    */
 /* ************************************************************************* */
 
-/* --- MAIN_PIPE ---
-* Render all images */
-
-typedef void	*t_img;
-
-typedef struct s_fragment
-{
-	t_img	mlx_img;
-	int		y;
-	int		x;
-}	t_fragment;
-
-/* --- ANIM_PIPE ---
-* Update all images */
-
-typedef struct s_speed
-{
-	int		y_left;
-	int		x_left;
-	int		frames_curr;
-	int		frame_end;
-}	t_speed;
-
-typedef struct s_animation
-{
-	t_img	*images;		// NULL terminated array of borrowed images
-	int		frame_curr;
-	int		frame_end;
-}	t_animation;
-
-/* --- API ---
-* Expose endpoints */
-
-// PRIVATE - START
-# define RENDERER_CAP	1024
-bool	component_default_callback_each(void *data);
-bool	component_default_callback_last(void *data);
-// PRIVATE - END
-
-typedef struct s_view
-{
-	t_fragment	fragment;
-	t_speed		movement;
-	t_speed		animation;
-	void		*data;		// borrowed
-	bool		(*callback_each)(void *data);
-	bool		(*callback_last)(void *data);
-}	t_view;
-
-typedef struct s_time
+typedef struct s_clock
 {
 	size_t	ms;
+	size_t	tick;
+	size_t	tps;
 	size_t	frame;
 	size_t	fps;
-}	t_time;
+}	t_clock;
 
-typedef struct s_renderer
-{
-	// TODO: data struct de la vidéo Youtube pour les queues !!
-	t_fragment	fragments[RENDERER_CAP];	// Processed first, private
-	size_t		fragments_count;
-	t_view		views[RENDERER_CAP];		// Processed last, public (get/set)
-	size_t		views_count;
-	t_time		time;
-}	t_renderer;
 
 /* ************************************************************************* */
 /*                                   OBJECT                                    */

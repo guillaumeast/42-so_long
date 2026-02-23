@@ -19,8 +19,8 @@ typedef struct s_model
 	size_t		moves;
 }	t_model;
 
-t_model	model_init(void);
-bool	model_load(t_model *model);
-void	model_free(t_model *model);
+void	model_init(void);
+bool	model_load(void);
+void	model_free(void);
 
 #endif

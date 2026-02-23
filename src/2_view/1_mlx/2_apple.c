@@ -1,6 +1,8 @@
-#ifdef __APPLE__
-#include <CoreGraphics/CoreGraphics.h>
+#include <stdlib.h>
 
+#ifdef __APPLE__
+
+#include <CoreGraphics/CoreGraphics.h>
 
 int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey)
 {
